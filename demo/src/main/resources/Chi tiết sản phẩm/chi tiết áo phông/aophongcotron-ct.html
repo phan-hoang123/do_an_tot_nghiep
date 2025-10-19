@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="aophongcotron-ct.css">
+</head>
+<body>
+    <div id="header-simple">
+        <h1>HOÀNG STORE</h1>
+    </div>
+    
+    <div class="container">
+        <p style="font-size:0.9em; color:#777;">
+            <a href="/demo/src/main/resources/Trang chủ/trangchu.html">Trang Chủ</a> &gt; 
+            <a href="/demo/src/main/resources/Sản phẩm/aophong.html">Áo Phông Thể Thao Nam</a>; 
+        </p>
+    </div>
+
+    <div id="product-detail-area" class="container">
+
+        <div class="image-gallery">
+            <div class="main-image">
+                <img id="main-product-image" src="anh1.jpg" data-zoom-image="anh1.jpg" alt="Áo Phông Nam Thể Thao - Ảnh chính">
+            </div>
+            <div class="thumbnail-images">
+                <img src="anh2.jpg" alt="Ảnh 1" class="selected"
+                    onclick="changeMainImage(this)" 
+                    data-large-src="anh2.jpg">
+
+                <img src="anh3.png" alt="Ảnh 2"
+                    onclick="changeMainImage(this)" 
+                    data-large-src="anh3.png">
+
+                <img src="anh3.png" alt="Ảnh 3"
+                    onclick="changeMainImage(this)" 
+                    data-large-src="anh3">
+
+                <img src="anh2.jpg" alt="Ảnh 4"
+                    onclick="changeMainImage(this)" 
+                    data-large-src="anh2.jpg">
+            </div>
+        </div>
+
+        <div class="product-info">
+            <h2>Áo Phông Cổ Tròn</h2>
+            
+            <div class="sku-rating">
+                <span>Mã sản phẩm: <strong>CR001</strong></span>
+                <span>⭐⭐⭐⭐⭐ (35 Đánh giá)</span>
+            </div>
+
+            <div class="price-area">
+                <span class="old-price">790.000 VNĐ</span>
+                <span class="current-price">599.000 VNĐ</span>
+                <p style="color:red; font-weight:bold;">TIẾT KIỆM: 191.000 VNĐ</p>
+            </div>
+
+            <div class="options">
+                <div class="size-options">
+                    <label>Kích cỡ:</label>
+                    <span class="selected">S</span>
+                    <span>M</span>
+                    <span>L</span>
+                    <span>XL</span>
+                    <span>XXL</span>
+                    <a href="Bang_size_ao.png" style="color:#c00; margin-left:15px; font-weight:normal;">(Xem Bảng Size)</a>
+                </div>
+                
+                <div class="color-options">
+                    <label>Màu sắc:</label>
+                    <span style="display:inline-block; width:30px; height:30px; background-color:white; border:2px solid #c00;"></span> <span style="display:inline-block; width:30px; height:30px; background-color:lightblue; border:1px solid #ddd; margin-left:10px;"></span> <span style="display:inline-block; width:30px; height:30px; background-color:#333; border:1px solid #ddd; margin-left:10px;"></span> </div>
+            </div>
+
+            <div class="add-to-cart-area">
+                <input type="number" value="1" min="1" class="quantity-input">
+                <button class="buy-btn">THÊM VÀO GIỎ HÀNG</button>
+                <script src="/demo/src/main/resources/templates/Soluong.js"></script>
+                <script src="/demo/src/main/resources/templates/API.js"></script>
+            </div>
+            
+            <button class="buy-btn" style="background-color: #000; margin-top: 15px;">MUA NGAY (Giao Hàng Tận Nơi)</button>
+
+            <div class="policy-info">
+                <p style="font-weight:bold; color:#c00;">CHÍNH SÁCH CỬA HÀNG</p>
+                <ul>
+                    <li>✓ Miễn phí giao hàng toàn quốc.</li>
+                    <li>✓ Đổi hàng trong 7 ngày (Sản phẩm còn nguyên tem mác).</li>
+                    <li>✓ Thanh toán khi nhận hàng (COD).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="product-tabs" class="container">
+        <div class="tabs-header">
+            <span class="tab-link active" data-tab="description">MÔ TẢ SẢN PHẨM</span>
+            <span class="tab-link" data-tab="specs">ĐÁNH GIÁ CÁC SẢN PHẨM</span>
+            <span class="tab-link" data-tab="reviews">CHÍNH SÁCH SẢN PHẨM</span>
+        </div>
+
+        <div class="tab-content-container">
+
+            <div id="description" class="tab-content active">
+                <h3>Chi Tiết Bộ Vest Nam 2 Lớp Màu Ghi Thanh Lịch</h3>
+                <p>Bộ vest nam 2 lớp màu ghi là trang phục đa năng, mang lại vẻ ngoài thanh lịch, chuyên nghiệp và thời thượng.</p>
+                <ul>
+                    <li><strong>Chất liệu:</strong> 100% cotton, CVC, TC, Polyeste.</li>
+                    <li><strong>Kiểu dáng:</strong> Regular Fit (Suông vừa vặn, tạo sự thoải mái, phù hợp vs tất cả mọi người).</li>
+                    <li><strong>Đặc điểm nổi bật:</strong> Sản phẩm cơ bản, linh hoạt, dễ phối đồ, phù hợp với mọi phong cách và hoạt động hàng ngày.</li>
+                    <li><strong>Thích hợp:</strong> Các hoạt động thường ngày, đi chơi, dạo phố, các hoạt động năng động.</li>
+                </ul>
+                <p><strong>Hướng dẫn bảo quản:</strong> Giặt nước lạnh, tránh dùng chất tẩy rửa mạnh, phơi trong bóng râm.</p>
+            </div>
+
+            <div id="specs" class="tab-content hidden">
+                <h3>Đánh giá - Nhận xét từ sản phẩm</h3>
+            </div>
+
+            <div id="reviews" class="tab-content hidden">
+                <h3><strong>1: Chính sách bảo mật</strong></h3>
+                <ul>
+                    <li>Sản phẩm nguyên giá chỉ được đổi 01 lần duy nhất sang sản phẩm nguyên giá khác và không thấp hơn giá trị sản phẩm đã mua.</li>
+                    <li>Chính sách chỉ áp dụng khi sản phẩm còn hóa đơn mua hàng, còn nguyên nhãn mác, thẻ bài đính kèm sản phẩm và sản phẩm không bị dơ bẩn, hư hỏng bởi những tác nhân bên ngoài cửa hàng sau khi mua sản phẩm.</li>
+                    <li>Sản phẩm đồ lót và phụ kiện không được đổi trả.</li>
+                </ul>
+
+                <h3><strong>2: Điều kiện đổi sản phẩm.</strong></h3>
+                <ul>
+                    <li>Đổi hàng trong vòng 07 ngày kể từ ngày khách hàng nhận được sản phẩm.</li>
+                    <li>Sản phẩm còn nguyên tem, mác và chưa qua sử dụng.</li>
+                </ul>
+
+            </div>
+
+            <script src="/demo/src/main/resources/templates/vestnam.js"></script>
+        </div>
+
+    <div class="container" style="margin-top: 40px; text-align: center;">
+        <h2>SẢN PHẨM TƯƠNG TỰ</h2>
+        <p style="color:#777;">
+            <main class="product-grid-new">
+            
+            <div class="product-card-new">
+                <a href="#" class="product-link">
+                    <div class="product-image-new">
+                        <img src="aopolothethao.jpg" alt="Áo Phông Polo Thể Thao">
+                        <span class="product-badge new-badge">NEW ARRIVAL</span>
+                    </div>
+                    <div class="product-info-new">
+                        <h3 class="product-name-new">Áo phông polo</h3>
+                        <p class="product-attributes">Màu: Trắng đen | Form: Slimfit</p>
+                        <p class="product-price-new">
+                            <span class="current-price-new">500.000₫</span>
+                        </p>
+                    </div>
+                    <button class="quick-view-btn">Mua Ngay</button>
+                </a>
+            </div>
+
+            <div class="product-card-new">
+                <a href="#" class="product-link">
+                    <div class="product-image-new">
+                        <img src="aophongoversize.jpg" alt="Áo Phông Oversize">
+                        <span class="product-badge sale-badge">-25%</span>
+                    </div>
+                    <div class="product-info-new">
+                        <h3 class="product-name-new">Áo phông oversize</h3>
+                        <p class="product-attributes">Màu: Navy | Form: Oversize</p>
+                        <p class="product-price-new">
+                            <span class="original-price-new">599.000₫</span>
+                        </p>
+                    </div>
+                    <button class="quick-view-btn">Mua Ngay</button>
+                </a>
+            </div>
+
+            <div class="product-card-new">
+                <a href="#" class="product-link">
+                    <div class="product-image-new">
+                        <img src="aophongcotim.jpg" alt="Áo Phông Cổ Tím">
+                    </div>
+                    <div class="product-info-new">
+                        <h3 class="product-name-new">Áo phông cổ tím</h3>
+                        <p class="product-attributes">Màu: Đen | Form: oversize</p>
+                        <p class="product-price-new">
+                            <span class="current-price-new">799.000₫</span>
+                        </p>
+                    </div>
+                    <button class="quick-view-btn">Mua Ngay</button>
+                </a>
+            </div>
+            
+            <div class="product-card-new">
+                <a href="#" class="product-link">
+                    <div class="product-image-new">
+                        <img src="aophongtaydai.jpg" alt="Áo Phông Tay Dài">
+                    </div>
+                    <div class="product-info-new">
+                        <h3 class="product-name-new">Áo phông tay dài</h3>
+                        <p class="product-attributes">Màu: Xanh Dương | Form: Regular Fit</p>
+                        <p class="product-price-new">
+                            <span class="current-price-new">599.000₫</span>
+                        </p>
+                    </div>
+                    <button class="quick-view-btn">Mua Ngay</button>
+                </a>
+            </div>
+        </main>
+        </p>
+    </div>
+
+    <div id="footer" style="background-color: #1a1a1a; color: #ccc; text-align: center; padding: 20px 0; margin-top: 50px;">
+        <p>&copy; 2025 PhanHoang Vietnam. Mọi bản quyền đều được bảo lưu.</p>
+    </div>
+    <script src="/demo/src/main/resources/Chi tiết sản phẩm/chi tiết áo phông/js/jquery-1.8.3.min.js"></script>
+
+    <script src="/demo/src/main/resources/Chi tiết sản phẩm/chi tiết áo phông/js/jquery.elevateZoom-3.0.8.min.js"></script>
+
+    <script src="/demo/src/main/resources/Chi tiết sản phẩm/chi tiết áo phông/js/aophongcotron-ct.js"></script>
+
+</body>
+</html>

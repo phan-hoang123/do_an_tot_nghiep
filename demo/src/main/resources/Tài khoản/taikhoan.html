@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="taikhoan.css">
+</head>
+<body>
+     <div id="header-simple">
+        <h1>QUẢN LÝ TÀI KHOẢN</h1>
+    </div>
+    
+    <div id="account-layout" class="container">
+        
+        <div id="sidebar">
+            <h3>Xin chào, [Tên Khách Hàng]</h3>
+            <ul>
+                <li><a href="#dashboard" class="active">Thông Tin Cá Nhân</a></li>
+                <li><a href="#orders">Lịch Sử Đơn Hàng</a></li>
+                <li><a href="#addresses">Sổ Địa Chỉ Giao Hàng</a></li>
+                <li><a href="#changepassword">Đổi Mật Khẩu</a></li>
+                <li><a href="#reviews">Đánh Giá Của Tôi</a></li>
+            </ul>
+            <div id="logout-link">
+                <a href="#logout">Đăng Xuất &rarr;</a>
+            </div>
+        </div>
+
+        <div id="account-content">
+            <h2>THÔNG TIN TÀI KHOẢN CỦA TÔI</h2>
+
+            <form action="#save-profile" method="POST">
+                
+                <div class="info-group">
+                    <label for="name">Họ và Tên</label>
+                    <input type="text" id="name" name="name" value="Nguyễn Văn A" required>
+                </div>
+
+                <div class="info-group">
+                    <label for="email">Địa chỉ Email</label>
+                    <input type="email" id="email" name="email" value="nguyenvana@example.com" disabled style="background-color: #eee;">
+                    <p style="font-size:0.8em; color:#777;">(Email là tài khoản đăng nhập, không thể thay đổi)</p>
+                </div>
+
+                <div class="info-group">
+                    <label for="phone">Số Điện Thoại</label>
+                    <input type="text" id="phone" name="phone" value="0987 654 321">
+                </div>
+                
+                <div class="info-group">
+                    <label for="dob">Ngày Sinh</label>
+                    <input type="text" id="dob" name="dob" value="01/01/1990" placeholder="dd/mm/yyyy">
+                </div>
+
+                <div class="info-group">
+                    <label>Giới Tính</label>
+                    <input type="radio" id="male" name="gender" value="male" checked> 
+                    <label for="male" style="display: inline; font-weight: normal; margin-right: 15px;">Nam</label>
+                    
+                    <input type="radio" id="female" name="gender" value="female"> 
+                    <label for="female" style="display: inline; font-weight: normal;">Nữ</label>
+                </div>
+                
+                <button type="submit" class="save-btn">CẬP NHẬT THÔNG TIN</button>
+            </form>
+            
+            <hr style="margin-top: 40px; border: 0; border-top: 1px solid #ddd;">
+
+            <div id="orders-summary" style="margin-top: 20px;">
+                <h3>Đơn Hàng Gần Đây</h3>
+                <p>Đơn hàng cuối cùng: #TORANO12345 (Ngày 10/10/2025) - Tình trạng: **Đã Giao Thành Công**</p>
+                <a href="#orders" style="color:#c00; font-weight:bold;">Xem tất cả lịch sử đơn hàng &rarr;</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="footer" style="background-color: #1a1a1a; color: #ccc; text-align: center; padding: 20px 0; margin-top: 50px;">
+        <p>&copy; 2025 Torano Vietnam. Cảm ơn bạn đã đồng hành.</p>
+    </div>
+</body>
+</html>

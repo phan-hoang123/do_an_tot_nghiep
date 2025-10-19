@@ -1,0 +1,118 @@
+body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        
+        /* Header đơn giản */
+        #header-simple {
+            background-color: #000;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #header-simple h1 {
+            margin: 0;
+            font-size: 1.8em;
+            letter-spacing: 3px;
+        }
+        
+        /* Tiêu đề trang */
+        h2 {
+            text-align: center;
+            margin: 30px 0 20px;
+            color: #000;
+            text-transform: uppercase;
+            font-size: 2em;
+            border-bottom: 2px solid #c00;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* =============================================== */
+        /* HƯỚNG DẪN MUA HÀNG (GUIDE CONTENT) */
+        /* =============================================== */
+        #guide-content {
+            background-color: white;
+            padding: 40px;
+            margin: 30px auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .guide-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 30px;
+        }
+
+        .step-number-box {
+            background-color: #c00;
+            color: white;
+            min-width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin-right: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .step-detail {
+            flex: 1;
+        }
+
+        .step-detail h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #000;
+        }
+        
+        .step-detail ul {
+            padding-left: 20px;
+            margin: 10px 0;
+            list-style: square;
+        }
+        
+        /* Màu cho phần tóm tắt */
+        .summary-box {
+            background-color: #f0f8ff; 
+            border: 1px solid #007bff;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        /* Liên hệ nhanh */
+        .contact-cta {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .contact-cta a {
+            background-color: #000;
+            color: white;
+            padding: 15px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: inline-block;
+        }

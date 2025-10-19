@@ -1,0 +1,152 @@
+ body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        
+        /* Header đơn giản */
+        #header-simple {
+            background-color: #000;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #header-simple h1 {
+            margin: 0;
+            font-size: 1.8em;
+            letter-spacing: 3px;
+        }
+        
+        /* Tiêu đề trang */
+        h2 {
+            text-align: center;
+            margin: 30px 0 20px;
+            color: #000;
+            text-transform: uppercase;
+            font-size: 2em;
+            border-bottom: 2px solid #c00;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* =============================================== */
+        /* CHÍNH SÁCH BẢO HÀNH (POLICY CONTENT) */
+        /* =============================================== */
+        #policy-content {
+            background-color: white;
+            padding: 40px;
+            margin: 30px auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .policy-section {
+            margin-bottom: 40px;
+        }
+
+        .policy-section h3 {
+            font-size: 1.5em;
+            color: #c00;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* Điểm nổi bật về thời gian */
+        .warranty-duration {
+            text-align: center;
+            background-color: #fff3cd; /* Màu vàng nhạt */
+            border: 1px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .warranty-duration strong {
+            display: block;
+            font-size: 1.8em;
+            color: #c00;
+            margin-bottom: 5px;
+        }
+        
+        .warranty-duration p {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        /* Danh sách chi tiết */
+        .policy-section ul {
+            list-style: disc;
+            padding-left: 25px;
+        }
+
+        .policy-section li {
+            margin-bottom: 10px;
+        }
+        
+        /* Điều kiện loại trừ */
+        .exclusion-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .exclusion-list li {
+            padding: 10px;
+            border-left: 4px solid #dc3545; /* Màu đỏ cho điều kiện loại trừ */
+            background-color: #f8d7da; /* Màu nền đỏ nhạt */
+            margin-bottom: 10px;
+        }
+
+        /* Quy trình bảo hành */
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .process-step .step-number {
+            background-color: #000;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .process-step p {
+            margin: 0;
+            flex: 1;
+        }
+
+        /* Nút Liên hệ nhanh */
+        .contact-cta {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .contact-cta a {
+            background-color: #c00;
+            color: white;
+            padding: 15px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: inline-block;
+        }

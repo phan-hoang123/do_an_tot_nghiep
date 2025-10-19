@@ -1,0 +1,152 @@
+body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        
+        /* Header đơn giản */
+        #header-simple {
+            background-color: #000;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #header-simple h1 {
+            margin: 0;
+            font-size: 1.8em;
+            letter-spacing: 3px;
+        }
+        
+        /* Tiêu đề trang */
+        h2 {
+            text-align: center;
+            margin: 30px 0 20px;
+            color: #000;
+            text-transform: uppercase;
+            font-size: 2em;
+            border-bottom: 2px solid #c00;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* =============================================== */
+        /* THÔNG TIN LIÊN HỆ & BẢN ĐỒ */
+        /* =============================================== */
+        #contact-info-map {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .contact-details {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .contact-details h3 {
+            color: #c00;
+            font-size: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .info-block {
+            margin-bottom: 20px;
+        }
+        
+        .info-block strong {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .map-frame {
+            flex: 2;
+            height: 400px; /* Chiều cao cố định cho bản đồ */
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+        
+        .map-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Đảm bảo ảnh bản đồ phủ đầy */
+        }
+
+        /* =============================================== */
+        /* FORM LIÊN HỆ */
+        /* =============================================== */
+        #contact-form-area {
+            background-color: white;
+            padding: 40px;
+            margin: 50px auto;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        #contact-form-area h2 {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .submit-btn {
+            background-color: #c00;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #000;
+        }

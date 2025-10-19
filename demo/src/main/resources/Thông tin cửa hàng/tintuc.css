@@ -1,0 +1,200 @@
+body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        
+        /* Header đơn giản */
+        #header-simple {
+            background-color: #000;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        #header-simple h1 {
+            margin: 0;
+            font-size: 1.8em;
+            letter-spacing: 3px;
+        }
+        
+        /* Tiêu đề trang */
+        h2 {
+            text-align: left;
+            margin: 0 0 20px;
+            color: #000;
+            text-transform: uppercase;
+            font-size: 1.8em;
+            border-bottom: 2px solid #c00;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* =============================================== */
+        /* BLOG LAYOUT - Bố cục 2 cột */
+        /* =============================================== */
+        #blog-layout {
+            display: flex;
+            gap: 30px;
+            padding: 40px 0;
+        }
+
+        /* Cột Nội dung chính (Bài viết) */
+        #main-posts {
+            flex: 3; /* Chiếm 3/4 không gian */
+        }
+        
+        /* Bài viết */
+        .post-card {
+            background-color: white;
+            border: 1px solid #eee;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+        }
+        
+        .post-image {
+            width: 35%;
+            overflow: hidden;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .post-card:hover .post-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            width: 65%;
+            padding: 25px;
+        }
+
+        .post-content h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        
+        .post-meta {
+            font-size: 0.8em;
+            color: #777;
+            margin-bottom: 15px;
+        }
+        
+        .post-meta span:before {
+            content: "•";
+            margin: 0 5px;
+        }
+        
+        .post-excerpt {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            color: #c00;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        /* Cột Sidebar */
+        #sidebar {
+            flex: 1; /* Chiếm 1/4 không gian */
+            height: fit-content;
+        }
+        
+        .sidebar-widget {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-top: 3px solid #c00;
+        }
+
+        .sidebar-widget h4 {
+            font-size: 1.2em;
+            text-transform: uppercase;
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .sidebar-widget ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-widget li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .sidebar-widget a {
+            color: #333;
+            font-size: 0.95em;
+        }
+        
+        .sidebar-widget a:hover {
+            color: #c00;
+        }
+        
+        /* Bài viết phổ biến */
+        .popular-post-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            align-items: center;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .popular-post-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+        }
+        
+        .popular-post-item span {
+            font-size: 0.8em;
+            color: #777;
+        }
+
+        /* Phân trang */
+        #pagination {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        #pagination a {
+            display: inline-block;
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            margin: 0 2px;
+            color: #333;
+        }
+        
+        #pagination a.current {
+            background-color: #c00;
+            color: white;
+            border-color: #c00;
+        }
