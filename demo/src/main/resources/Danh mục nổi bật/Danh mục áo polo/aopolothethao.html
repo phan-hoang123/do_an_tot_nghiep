@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Áo Sơ Mi Dài Tay - TORANO</title>
+    <!-- Tích hợp Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: white; }
+
+        /* Header Bar (Black) */
+        #page-header {
+            background-color: #1f2937; /* Màu đen hoặc xám đậm */
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        #page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        #page-header p {
+            font-size: 1rem;
+            color: #d1d5db;
+        }
+
+        /* Main Layout: Sidebar + Content */
+        .main-content-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 15px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        @media (min-width: 1024px) {
+            .main-content-layout {
+                grid-template-columns: 250px 1fr; /* Sidebar 250px */
+            }
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            background-color: white;
+            padding: 20px 0;
+        }
+        .filter-group {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 15px;
+        }
+        .filter-group h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #1f2937; /* Gạch dưới đậm */
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .filter-option {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #374151;
+            display: flex;
+            align-items: center;
+        }
+        .filter-option input[type="checkbox"] {
+            margin-right: 10px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        .color-option {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid #d1d5db;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .color-option:hover { transform: scale(1.1); }
+        .color-option.selected { border: 3px solid #1e3a8a; }
+
+        .search-btn {
+            background-color: #1f2937;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .search-btn:hover { background-color: #374151; }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        /* Product Card Styling */
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s;
+        }
+        .product-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .product-image-area {
+            position: relative;
+            overflow: hidden;
+        }
+        .product-image-area img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s;
+        }
+        .product-card:hover .product-image-area img {
+            transform: scale(1.05);
+        }
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: white;
+            z-index: 10;
+        }
+        .new-badge { background-color: #10b981; } /* Green */
+        .sale-badge { background-color: #ef4444; } /* Red */
+        
+        .product-info-area {
+            padding: 15px;
+            text-align: center;
+        }
+        .product-info-area h3 {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        .product-attributes {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+        .price-area {
+            margin-bottom: 15px;
+        }
+        .original-price {
+            text-decoration: line-through;
+            color: #9ca3af;
+            margin-right: 8px;
+        }
+        .current-price {
+            font-weight: bold;
+            color: #dc2626; /* Màu đỏ */
+            font-size: 1.1rem;
+        }
+
+        /* Button Thêm vào Giỏ Hàng */
+        .add-to-cart-btn {
+            width: 90%;
+            padding: 10px 0;
+            background-color: #1f2937;
+            color: white;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            margin: 0 auto 15px;
+            display: block;
+            text-transform: uppercase;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+        .add-to-cart-btn:hover { background-color: #374151; }
+
+        /* Modal thông báo */
+        #notification-modal {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            transform: translateY(-20px);
+        }
+        #notification-modal.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* Style for Cart UI */
+        #cart-button {
+            cursor: pointer;
+            z-index: 100;
+        }
+        #cart-popup {
+            min-width: 300px;
+            z-index: 90;
+        }
+        .cart-item {
+            display: flex;
+            align-items: flex-start; 
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .cart-item-info {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+        .cart-item-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            line-height: 1.2;
+            margin-bottom: 3px;
+        }
+        .cart-item-details {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+        .cart-item-image {
+            width: 50px;
+            min-width: 50px; 
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        /* Checkout Modal Styles */
+        #checkout-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.3s;
+            opacity: 0;
+            visibility: hidden;
+        }
+        #checkout-modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        #checkout-modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
+        #checkout-modal-overlay.show #checkout-modal-content {
+            transform: scale(1);
+        }
+
+        .checkout-summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .checkout-summary-item:last-of-type {
+            border-bottom: none;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Nút Giỏ Hàng cố định và pop-up giỏ hàng -->
+    <div id="cart-container" class="fixed top-5 right-5 z-20">
+        <button id="cart-button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow-lg flex items-center transition duration-200">
+            <!-- Icon Giỏ Hàng (Inline SVG for simplicity) -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Giỏ hàng (<span id="cart-counter">0</span>)
+        </button>
+        <!-- Popup Giỏ Hàng -->
+        <div id="cart-popup" class="hidden absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
+            <div id="cart-items-list" class="p-3 max-h-96 overflow-y-auto">
+                <!-- Items will be injected here -->
+                <p id="empty-cart-message" class="text-gray-500 text-center py-4">Giỏ hàng trống.</p>
+            </div>
+            <div id="cart-summary" class="bg-gray-50 p-3 border-t">
+                <p class="font-bold text-gray-800">Tổng cộng: <span id="cart-total" class="text-red-600">0₫</span></p>
+                <button id="checkout-button" class="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold">Thanh Toán</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Bar -->
+    <div id="page-header">
+        <h1>ÁO SƠ MI DÀI TAY</h1>
+        <p>Phong cách lịch lãm, đa dạng chất liệu cho mọi quý ông</p>
+    </div>
+
+    <div class="main-content-layout">
+        <!-- Sidebar Lọc -->
+        <div class="sidebar">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">LỌC THEO</h2>
+            
+            <!-- Lọc Form Dáng -->
+            <div class="filter-group">
+                <h3>FORM DÁNG</h3>
+                <label class="filter-option">
+                    <input type="checkbox" checked> Slimfit
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Regular
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Oversize
+                </label>
+            </div>
+            
+            <!-- Lọc Chất Liệu -->
+            <div class="filter-group">
+                <h3>CHẤT LIỆU</h3>
+                <label class="filter-option">
+                    <input type="checkbox" checked> Cotton
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Bamboo
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Vải Lụa
+                </label>
+            </div>
+
+            <!-- Lọc Màu Sắc -->
+            <div class="filter-group">
+                <h3>MÀU SẮC</h3>
+                <div class="mt-3 flex">
+                    <!-- Màu Đen -->
+                    <span class="color-option" style="background-color: black;"></span>
+                    <!-- Màu Trắng -->
+                    <span class="color-option selected" style="background-color: white;"></span>
+                    <!-- Màu Xanh Navy -->
+                    <span class="color-option" style="background-color: navy;"></span>
+                    <!-- Màu Xanh Nhạt -->
+                    <span class="color-option" style="background-color: lightblue;"></span>
+                </div>
+            </div>
+
+            <button class="search-btn">Xem Kết Quả</button>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid">
+            
+            <!-- Card Sản phẩm 1 -->
+            <div class="product-card" data-product-id="POLO001" data-name="Polo Cổ Bẻ Basic Cotton 100%" data-price="399000" data-image-url="https://placehold.co/300x380/1f2937/ffffff?text=Polo+Đen+1">
+                <div class="product-image-area">
+                    <img src="https://placehold.co/300x380/1f2937/ffffff?text=Polo+Đen+1" alt="Polo Cổ Bẻ Basic Cotton 100%">
+                    <span class="badge new-badge">NEW ARRIVAL</span>
+                </div>
+                <div class="product-info-area">
+                    <h3>Polo Cổ Bẻ Basic Cotton 100%</h3>
+                    <p class="product-attributes">Màu: Đen | Form: Basic</p>
+                    <div class="price-area">
+                        <span class="current-price">399.000₫</span>
+                    </div>
+                    <!-- Nút Thêm vào Giỏ Hàng -->
+                    <button class="add-to-cart-btn">Thêm vào Giỏ Hàng</button>
+                </div>
+            </div>
+            
+            <!-- Card Sản phẩm 2 -->
+            <div class="product-card" data-product-id="POLO002" data-name="Polo Thể Thao Dry-Fit" data-price="450000" data-image-url="https://placehold.co/300x380/3b82f6/ffffff?text=Polo+Xanh">
+                <div class="product-image-area">
+                    <img src="https://placehold.co/300x380/3b82f6/ffffff?text=Polo+Xanh" alt="Polo Thể Thao Dry-Fit">
+                    <span class="badge sale-badge">-25%</span>
+                </div>
+                <div class="product-info-area">
+                    <h3>Polo Thể Thao Dry-Fit</h3>
+                    <p class="product-attributes">Màu: Navy | Form: Dry Fit</p>
+                    <div class="price-area">
+                        <span class="original-price">600.000₫</span>
+                        <span class="current-price">450.000₫</span>
+                    </div>
+                    <button class="add-to-cart-btn">Thêm vào Giỏ Hàng</button>
+                </div>
+            </div>
+            
+            <!-- Card Sản phẩm 3 -->
+            <div class="product-card" data-product-id="POLO003" data-name="Polo Dệt Jacquard" data-price="420000" data-image-url="https://placehold.co/300x380/1e3a8a/ffffff?text=Polo+Xanh+Dệt">
+                <div class="product-image-area">
+                    <img src="https://placehold.co/300x380/1e3a8a/ffffff?text=Polo+Xanh+Dệt" alt="Polo Cổ Bẻ Basic Cotton 100%">
+                </div>
+                <div class="product-info-area">
+                    <h3>Polo Dệt Jacquard</h3>
+                    <p class="product-attributes">Màu: Xanh Navy | Form: Slimfit</p>
+                    <div class="price-area">
+                        <span class="current-price">420.000₫</span>
+                    </div>
+                    <button class="add-to-cart-btn">Thêm vào Giỏ Hàng</button>
+                </div>
+            </div>
+
+            <!-- Card Sản phẩm 4 -->
+            <div class="product-card" data-product-id="POLO004" data-name="Áo Polo Uniform Màu Cam" data-price="349000" data-image-url="https://placehold.co/300x380/f97316/ffffff?text=Polo+Nâu">
+                <div class="product-image-area">
+                    <img src="https://placehold.co/300x380/f97316/ffffff?text=Polo+Nâu" alt="Áo Polo Uniform Màu Cam">
+                </div>
+                <div class="product-info-area">
+                    <h3>Áo Polo Uniform</h3>
+                    <p class="product-attributes">Màu: Nâu | Form: Regular</p>
+                    <div class="price-area">
+                        <span class="current-price">349.000₫</span>
+                    </div>
+                    <button class="add-to-cart-btn">Thêm vào Giỏ Hàng</button>
+                </div>
+            </div>
+
+             <!-- Card Sản phẩm 5 -->
+            <div class="product-card" data-product-id="SOMI001" data-name="Sơ Mi Lụa Hàn Cao Cấp" data-price="629300" data-image-url="https://placehold.co/300x380/6366f1/ffffff?text=Sơ+Mi+Tím">
+                <div class="product-image-area">
+                    <img src="https://placehold.co/300x380/6366f1/ffffff?text=Sơ+Mi+Tím" alt="Sơ Mi Nam Dài Tay Màu Tím">
+                    <span class="badge sale-badge">-30%</span>
+                </div>
+                <div class="product-info-area">
+                    <h3>Sơ Mi Lụa Hàn Cao Cấp</h3>
+                    <p class="product-attributes">Màu: Tím | Form: Slimfit</p>
+                    <div class="price-area">
+                        <span class="original-price">899.000₫</span>
+                        <span class="current-price">629.300₫</span>
+                    </div>
+                    <button class="add-to-cart-btn">Thêm vào Giỏ Hàng</button>
+                </div>
+            </div>
+
+            <!-- Card Sản phẩm 6 -->
+            <div class="product-card" data-product-id="SOMI002" data-name="Sơ Mi Kẻ Sọc Cotton" data-price="549000" data-image-url="https://placehold.co/300x380/fcd34d/1e3a8a?text=Sơ+Mi+Kẻ">
+                <div class="product-image-area">
+                    <img src="https://placehold.co/300x380/fcd34d/1e3a8a?text=Sơ+Mi+Kẻ" alt="Sơ Mi Nam Kẻ Sọc">
+                    <span class="badge new-badge">HOT</span>
+                </div>
+                <div class="product-info-area">
+                    <h3>Sơ Mi Kẻ Sọc Cotton</h3>
+                    <p class="product-attributes">Màu: Kẻ Xanh | Form: Regular</p>
+                    <div class="price-area">
+                        <span class="current-price">549.000₫</span>
+                    </div>
+                    <button class="add-to-cart-btn">Thêm vào Giỏ Hàng</button>
+                </div>
+            </div>
+
+            <!-- Card Sản phẩm 7 -->
+            <div class="product-card" data-product-id="SOMI003" data-name="Sơ Mi Oxford Basic" data-price="499000" data-image-url="https://placehold.co/300x380/374151/ffffff?text=Sơ+Mi+Đen">
+                <div class="product-image-area">
+                    <img src="https://placehold.co/300x380/374151/ffffff?text=Sơ+Mi+Đen" alt="Sơ Mi Nam Màu Đen">
+                </div>
+                <div class="product-info-area">
+                    <h3>Sơ Mi Oxford Basic</h3>
+                    <p class="product-attributes">Màu: Đen | Form: Slimfit</p>
+                    <div class="price-area">
+                        <span class="current-price">499.000₫</span>
+                    </div>
+                    <button class="add-to-cart-btn">Thêm vào Giỏ Hàng</button>
+                </div>
+            </div>
+
+             <!-- Card Sản phẩm 8 -->
+            <div class="product-card" data-product-id="SOMI004" data-name="Sơ Mi Linen Thoáng Mát" data-price="637500" data-image-url="https://placehold.co/300x380/9ca3af/ffffff?text=Sơ+Mi+Xám">
+                <div class="product-image-area">
+                    <img src="https://placehold.co/300x380/9ca3af/ffffff?text=Sơ+Mi+Xám" alt="Sơ Mi Nam Màu Xám">
+                    <span class="badge sale-badge">-15%</span>
+                </div>
+                <div class="product-info-area">
+                    <h3>Sơ Mi Linen Thoáng Mát</h3>
+                    <p class="product-attributes">Màu: Xám | Form: Regular</p>
+                    <div class="price-area">
+                        <span class="original-price">750.000₫</span>
+                        <span class="current-price">637.500₫</span>
+                    </div>
+                    <button class="add-to-cart-btn">Thêm vào Giỏ Hàng</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div id="footer" style="background-color: #1a1a1a; color: #ccc; text-align: center; padding: 20px 0; margin-top: 50px;">
+        <p>&copy; 2025 TORANO Vietnam. Mọi bản quyền đều được bảo lưu.</p>
+    </div>
+
+    <!-- Modal thông báo -->
+    <div id="notification-modal">
+        Đã thêm sản phẩm vào giỏ hàng!
+    </div>
+
+    <!-- Checkout Modal (Hộp thoại Thanh toán) -->
+    <div id="checkout-modal-overlay">
+        <div id="checkout-modal-content">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">XÁC NHẬN ĐƠN HÀNG</h2>
+            
+            <div id="checkout-summary-list">
+                <!-- Danh sách sản phẩm sẽ được điền vào đây -->
+                <p class="text-center text-gray-500 italic py-4">Giỏ hàng rỗng, không thể thanh toán.</p>
+            </div>
+            
+            <div class="mt-6 pt-4 border-t-2 border-gray-200">
+                <div class="checkout-summary-item text-lg font-semibold text-gray-800">
+                    <span>TỔNG THANH TOÁN:</span>
+                    <span id="final-total" class="text-red-600">0₫</span>
+                </div>
+            </div>
+
+            <!-- Đã xóa dòng chữ 'mô phỏng' -->
+            <p class="text-sm text-gray-500 mt-4 text-center">
+                Vui lòng kiểm tra lại thông tin đơn hàng trước khi xác nhận.
+            </p>
+
+            <!-- Nút Thanh Toán (Đã thay thế nút Đóng bằng nút Xác nhận Thanh toán màu đỏ) -->
+            <button id="confirm-checkout-button" class="w-full mt-4 bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-semibold transition duration-200">
+                XÁC NHẬN THANH TOÁN
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Key để lưu trữ giỏ hàng trong Session Storage
+        const CART_STORAGE_KEY = 'torano_session_cart';
+
+        // Hiển thị thông báo
+        function showNotification(message) {
+            const modal = document.getElementById('notification-modal');
+            modal.textContent = message;
+            modal.classList.add('show');
+            setTimeout(() => {
+                modal.classList.remove('show');
+            }, 3000);
+        }
+
+        /**
+         * Lấy giỏ hàng hiện tại từ sessionStorage. Nếu chưa có, trả về object rỗng.
+         * Giỏ hàng được lưu dưới dạng { productId: { itemData, quantity }, ... }
+         */
+        function getCart() {
+            const cartJson = sessionStorage.getItem(CART_STORAGE_KEY);
+            try {
+                return cartJson ? JSON.parse(cartJson) : {};
+            } catch (e) {
+                console.error("Lỗi khi parse giỏ hàng từ sessionStorage:", e);
+                return {};
+            }
+        }
+
+        // Lưu giỏ hàng vào sessionStorage
+        function saveCart(cart) {
+            sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+        }
+        
+        // Cập nhật số lượng sản phẩm trên nút giỏ hàng
+        function updateCartCounter(cart) {
+            const totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-counter').textContent = totalItems;
+            
+            // Vô hiệu hóa nút Thanh Toán (trong pop-up) nếu giỏ hàng trống
+            const checkoutButton = document.getElementById('checkout-button');
+            if (totalItems === 0) {
+                checkoutButton.disabled = true;
+                checkoutButton.classList.add('opacity-50', 'cursor-not-allowed');
+                checkoutButton.textContent = 'Giỏ Hàng Trống';
+            } else {
+                checkoutButton.disabled = false;
+                checkoutButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                checkoutButton.textContent = 'Thanh Toán';
+            }
+        }
+
+        // Render cart items in the popup
+        function renderCart(cart) {
+            const listContainer = document.getElementById('cart-items-list');
+            const totalElement = document.getElementById('cart-total');
+            
+            // Xóa nội dung cũ
+            listContainer.innerHTML = ''; 
+            
+            let cartTotalAmount = 0;
+            
+            // Kiểm tra nếu giỏ hàng trống, hiển thị thông báo
+            if (Object.keys(cart).length === 0) {
+                const emptyMsg = document.createElement('p');
+                emptyMsg.className = 'text-gray-500 text-center py-4 text-sm italic';
+                emptyMsg.textContent = 'Giỏ hàng trống.';
+                listContainer.appendChild(emptyMsg);
+            } else {
+                // Duyệt qua các sản phẩm trong giỏ và tạo HTML
+                for (const productId in cart) {
+                    const item = cart[productId];
+                    const itemTotal = item.price * item.quantity;
+                    cartTotalAmount += itemTotal;
+                    
+                    // Format price for display (sử dụng toLocaleString cho tiền tệ Việt Nam)
+                    const formattedPrice = item.price.toLocaleString('vi-VN');
+                    const formattedTotal = itemTotal.toLocaleString('vi-VN');
+
+                    const itemHtml = `
+                        <div class="cart-item">
+                            <img src="${item.imageUrl}" onerror="this.onerror=null; this.src='https://placehold.co/50x50/cccccc/333333?text=SP';" alt="${item.name}" class="cart-item-image">
+                            <div class="cart-item-info">
+                                <p class="cart-item-name">${item.name}</p>
+                                <p class="cart-item-details">${item.quantity} x ${formattedPrice}₫</p>
+                                <p class="text-sm font-semibold text-gray-700">Thành tiền: ${formattedTotal}₫</p>
+                            </div>
+                        </div>
+                    `;
+                    listContainer.insertAdjacentHTML('beforeend', itemHtml);
+                }
+            }
+
+            // Cập nhật tổng số tiền
+            totalElement.textContent = cartTotalAmount.toLocaleString('vi-VN') + '₫';
+            
+            // Đồng thời cập nhật tổng tiền cuối cùng trong modal (nếu modal đang mở)
+            document.getElementById('final-total').textContent = cartTotalAmount.toLocaleString('vi-VN') + '₫';
+        }
+
+        /**
+         * Thêm sản phẩm vào giỏ hàng hoặc cập nhật số lượng
+         * @param {Object} product - Thông tin sản phẩm cần thêm (id, name, price, imageUrl)
+         */
+        function addToCart(product) {
+            const cart = getCart();
+
+            if (cart[product.id]) {
+                // Sản phẩm đã có, cập nhật số lượng
+                cart[product.id].quantity += 1;
+                showNotification(`Đã cập nhật số lượng cho ${product.name}! (Tổng: ${cart[product.id].quantity})`);
+            } else {
+                // Sản phẩm chưa có, thêm mới
+                cart[product.id] = {
+                    ...product,
+                    quantity: 1,
+                };
+                showNotification(`Đã thêm 1 sản phẩm ${product.name} vào giỏ hàng!`);
+            }
+
+            // Lưu giỏ hàng đã cập nhật
+            saveCart(cart);
+
+            // Cập nhật giao diện giỏ hàng
+            const updatedCart = getCart();
+            updateCartCounter(updatedCart);
+            renderCart(updatedCart);
+
+            console.log("Giỏ hàng hiện tại:", updatedCart);
+        }
+
+        // Function to prepare and display the checkout modal
+        function showCheckoutModal() {
+            const cart = getCart();
+            const modalOverlay = document.getElementById('checkout-modal-overlay');
+            const summaryList = document.getElementById('checkout-summary-list');
+            const finalTotalElement = document.getElementById('final-total');
+            const confirmButton = document.getElementById('confirm-checkout-button');
+
+            // Ẩn pop-up giỏ hàng
+            document.getElementById('cart-popup').classList.add('hidden');
+
+            summaryList.innerHTML = ''; // Clear previous summary
+
+            let cartTotalAmount = 0;
+            
+            if (Object.keys(cart).length === 0) {
+                summaryList.innerHTML = '<p class="text-center text-gray-500 italic py-4">Giỏ hàng rỗng, không thể thanh toán.</p>';
+                finalTotalElement.textContent = '0₫';
+                confirmButton.disabled = true;
+                confirmButton.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                confirmButton.disabled = false;
+                confirmButton.classList.remove('opacity-50', 'cursor-not-allowed');
+
+                // Render summary items
+                for (const productId in cart) {
+                    const item = cart[productId];
+                    const itemTotal = item.price * item.quantity;
+                    cartTotalAmount += itemTotal;
+                    
+                    const formattedItemTotal = itemTotal.toLocaleString('vi-VN');
+
+                    const itemHtml = `
+                        <div class="checkout-summary-item">
+                            <span class="text-gray-700">${item.name} (x${item.quantity})</span>
+                            <span class="font-medium">${formattedItemTotal}₫</span>
+                        </div>
+                    `;
+                    summaryList.insertAdjacentHTML('beforeend', itemHtml);
+                }
+
+                // Thêm phí vận chuyển (Ví dụ: 30.000₫)
+                const shippingFee = 30000;
+                cartTotalAmount += shippingFee;
+
+                 const shippingHtml = `
+                    <div class="checkout-summary-item text-gray-500 text-sm">
+                        <span>Phí Vận Chuyển:</span>
+                        <span>${shippingFee.toLocaleString('vi-VN')}₫</span>
+                    </div>
+                `;
+                summaryList.insertAdjacentHTML('beforeend', shippingHtml);
+                
+                // Cập nhật tổng tiền cuối cùng
+                finalTotalElement.textContent = cartTotalAmount.toLocaleString('vi-VN') + '₫';
+            }
+
+            // Hiển thị modal
+            modalOverlay.classList.add('show');
+        }
+
+        function hideCheckoutModal() {
+            document.getElementById('checkout-modal-overlay').classList.remove('show');
+        }
+
+        // NEW: Function to handle the final confirmation click
+        function handleConfirmCheckout() {
+            const cart = getCart();
+            if (Object.keys(cart).length === 0) {
+                // Nên không bao giờ xảy ra nếu nút bị disabled đúng
+                return; 
+            }
+            
+            // Xử lý logic thanh toán giả định:
+            // 1. Thông báo đặt hàng thành công
+            showNotification('Đơn hàng đã được đặt thành công! Cảm ơn quý khách.');
+            
+            // 2. Xóa giỏ hàng (giả định)
+            sessionStorage.removeItem(CART_STORAGE_KEY);
+            
+            // 3. Cập nhật lại giao diện
+            const emptyCart = {};
+            updateCartCounter(emptyCart);
+            renderCart(emptyCart);
+            
+            // 4. Đóng modal
+            hideCheckoutModal();
+        }
+
+
+        // Gắn sự kiện cho tất cả các nút
+        function attachEventListeners() {
+            // Sự kiện Thêm vào Giỏ Hàng
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const card = event.target.closest('.product-card');
+                    if (card) {
+                        const product = {
+                            id: card.dataset.productId,
+                            name: card.dataset.name,
+                            price: parseInt(card.dataset.price, 10), 
+                            imageUrl: card.dataset.imageUrl
+                        };
+                        addToCart(product);
+                    }
+                });
+            });
+            
+            // Sự kiện Toggle Cart Popup
+            const cartButton = document.getElementById('cart-button');
+            const cartPopup = document.getElementById('cart-popup');
+            cartButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                cartPopup.classList.toggle('hidden');
+                // Đảm bảo giỏ hàng được render lại mỗi lần mở
+                renderCart(getCart());
+            });
+            
+            // Đóng popup khi click ra ngoài
+            document.addEventListener('click', (event) => {
+                if (!cartButton.contains(event.target) && !cartPopup.contains(event.target)) {
+                    cartPopup.classList.add('hidden');
+                }
+            });
+
+            // Sự kiện Thanh Toán (trong pop-up) -> Mở modal
+            document.getElementById('checkout-button').addEventListener('click', (event) => {
+                event.stopPropagation();
+                const cart = getCart();
+                if (Object.keys(cart).length > 0) {
+                    showCheckoutModal();
+                } else {
+                    // Cập nhật lại nút nếu có trường hợp đặc biệt
+                    updateCartCounter(cart); 
+                    showNotification('Giỏ hàng trống, không thể thanh toán!');
+                }
+            });
+
+            // NEW: Sự kiện Xác nhận Thanh toán (trong modal) -> Hoàn tất giao dịch
+            document.getElementById('confirm-checkout-button').addEventListener('click', handleConfirmCheckout);
+            
+            // Đóng modal khi click ra ngoài overlay
+            document.getElementById('checkout-modal-overlay').addEventListener('click', (event) => {
+                if (event.target.id === 'checkout-modal-overlay') {
+                    hideCheckoutModal();
+                }
+            });
+        }
+
+        // Chạy gắn sự kiện khi trang tải xong
+        window.onload = function() {
+            attachEventListeners();
+            
+            // Tải và hiển thị giỏ hàng khi trang được tải lần đầu
+            const initialCart = getCart();
+            updateCartCounter(initialCart);
+            renderCart(initialCart);
+        }
+
+    </script>
+</body>
+</html>

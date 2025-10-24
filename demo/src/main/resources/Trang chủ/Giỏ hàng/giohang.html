@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng Của Bạn</title>
+    <!-- Tải Tailwind CSS để tạo giao diện responsive và hiện đại -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Thiết lập font Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px; /* Tăng chiều rộng để dễ nhìn hơn */
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        #cart-table thead th {
+            font-weight: 600;
+            color: #4b5563;
+            text-transform: uppercase;
+            padding: 15px 0;
+            border-bottom: 2px solid #ddd;
+            text-align: center;
+        }
+        #cart-table tbody td {
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        .product-info-cell {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+        }
+        .product-info-cell img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .product-name a {
+            font-weight: 600;
+            color: #1f2937;
+            text-decoration: none;
+        }
+        .product-details p {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        .quantity-input {
+            width: 70px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            margin: auto;
+            display: block;
+        }
+        .remove-btn {
+            color: #ef4444; /* red-500 */
+            cursor: pointer;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+        .remove-btn:hover {
+            color: #b91c1c; /* red-700 */
+        }
+        
+        /* Layout Summary */
+        #cart-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .coupon-area, .checkout-area {
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .coupon-area {
+            border: 1px solid #d1d5db;
+        }
+        .checkout-area {
+            background-color: #f9fafb; /* gray-50 */
+            border: 1px solid #d1d5db;
+        }
+        .checkout-area h3, .coupon-area h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 5px;
+            color: #1f2937;
+        }
+        .checkout-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #3b82f6; /* blue-500 */
+            color: white;
+            font-weight: 700;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .checkout-btn:hover {
+            background-color: #2563eb; /* blue-600 */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Confirmation Modal (Thay thế cho window.confirm/alert) -->
+    <div id="custom-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-80 max-w-full transform transition-all duration-300 scale-100">
+            <h4 class="text-lg font-bold text-gray-800 mb-3 border-b pb-2">Xác Nhận Xóa Sản Phẩm</h4>
+            <p id="modal-message" class="mb-6 text-gray-700">Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?</p>
+            <div class="flex justify-end gap-3">
+                <button id="modal-cancel-btn" class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition">Hủy</button>
+                <button id="modal-confirm-btn" class="px-4 py-2 text-sm font-medium rounded-lg bg-red-600 text-white hover:bg-red-700 transition">Xác Nhận Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="header-simple" class="text-center py-6 bg-white shadow-md">
+        <h1 class="text-2xl font-extrabold text-blue-600">GIỎ HÀNG CỦA HOANG STORE</h1>
+    </div>
+    
+    <div class="container">
+        <h2 class="text-xl font-bold mb-6 text-gray-800">GIỎ HÀNG CỦA BẠN</h2>
+
+        <div id="cart-table-container" class="overflow-x-auto">
+            <table id="cart-table" class="w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th style="width: 40%; text-align: left; padding-left: 10px;">SẢN PHẨM</th>
+                        <th style="width: 15%;">GIÁ</th>
+                        <th style="width: 15%;">SỐ LƯỢNG</th>
+                        <th style="width: 15%;">TỔNG CỘNG</th>
+                        <th style="width: 15%;">THAO TÁC</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items-body">
+                    <!-- Sản phẩm 1 -->
+                    <!-- Thêm data-price và id cho Total -->
+                    <tr data-price="599000" id="row-psm001"> 
+                        <td>
+                            <div class="product-info-cell">
+                                <!-- Sử dụng placeholder để tránh lỗi file not found -->
+                                <img src="https://placehold.co/80x80/0d9488/ffffff?text=SM" alt="Sơ Mi Trắng">
+                                <div>
+                                    <span class="product-name"><a href="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết áo sơ mi/somi-ct.html">Sơ Mi Nam Trắng Tay Dài | PSM001</a></span>
+                                    <div class="product-details">
+                                        <p>Mã: PSM001</p>
+                                        <p>Size: L, Màu: Trắng</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center"><span class="cart-price" id="price-psm001">599.000 VNĐ</span></td>
+                        <td class="text-center">
+                            <!-- Thêm class quantity-input để JS nhận diện -->
+                            <input type="number" value="1" min="1" class="quantity-input" data-product-id="psm001">
+                        </td>
+                        <td class="text-center"><span class="cart-total text-red-600 font-bold" id="total-psm001">599.000 VNĐ</span></td>
+                        <td class="text-center">
+                            <span class="remove-btn cursor-pointer" data-product-id="psm001">Xóa</span>
+                        </td>
+                    </tr>
+
+                    <!-- Sản phẩm 2 -->
+                    <!-- Thêm data-price và id cho Total -->
+                    <tr data-price="890000" id="row-pqa005">
+                        <td>
+                            <div class="product-info-cell">
+                                <!-- Sử dụng placeholder để tránh lỗi file not found -->
+                                <img src="https://placehold.co/80x80/0d9488/ffffff?text=QA" alt="Quần Âu">
+                                <div>
+                                    <span class="product-name"><a href="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết quần âu/quanaul-ct.html">Quần Âu Vải Nano Chống Nhăn | PQA005</a></span>
+                                    <div class="product-details">
+                                        <p>Mã: PQA005</p>
+                                        <p>Size: 31, Màu: Xanh Đen</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center"><span class="cart-price" id="price-pqa005">890.000 VNĐ</span></td>
+                        <td class="text-center">
+                            <!-- Thêm class quantity-input để JS nhận diện -->
+                            <input type="number" value="2" min="1" class="quantity-input" data-product-id="pqa005">
+                        </td>
+                        <td class="text-center"><span class="cart-total text-red-600 font-bold" id="total-pqa005">1.780.000 VNĐ</span></td>
+                        <td class="text-center">
+                            <span class="remove-btn cursor-pointer" data-product-id="pqa005">Xóa</span>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div id="cart-summary">
+            
+            <div class="coupon-area">
+                <h3 class="text-blue-600">MÃ GIẢM GIÁ</h3>
+                <p class="text-gray-600 mb-3 text-sm">Nếu bạn có mã giảm giá, hãy nhập vào ô bên dưới:</p>
+                <div class="flex gap-2">
+                    <input type="text" id="coupon-input" placeholder="Nhập mã giảm giá" class="border p-2 rounded w-2/3">
+                    <button id="apply-coupon-btn" class="bg-blue-500 text-white p-2 rounded w-1/3 hover:bg-blue-600 transition">ÁP DỤNG</button>
+                </div>
+                <p id="coupon-message" style="margin-top:15px; color: green; font-weight: bold;">[Thông báo: Mã giảm giá (SALE10) áp dụng thành công!]</p>
+            </div>
+            
+            <div class="checkout-area">
+                <h3 class="text-blue-600">TỔNG KẾT ĐƠN HÀNG</h3>
+                
+                <div class="checkout-row">
+                    <span class="text-gray-700">Tổng tiền hàng:</span>
+                    <span class="text-gray-800 font-semibold" id="subtotal">2.379.000 VNĐ</span>
+                </div>
+                
+                <div class="checkout-row">
+                    <span class="text-gray-700">Giảm giá Coupon (<span id="discount-percent">10</span>%):</span>
+                    <span style="color:red;" id="discount-amount">- 237.900 VNĐ</span>
+                </div>
+                
+                <div class="checkout-row">
+                    <span class="text-gray-700">Phí vận chuyển:</span>
+                    <span style="color:green;" id="shipping-fee">Miễn phí</span>
+                </div>
+                
+                <div class="checkout-row text-xl mt-3 pt-3 font-bold border-t-2 border-blue-200" style="border-bottom: none;">
+                    <strong>TỔNG THANH TOÁN:</strong>
+                    <strong class="text-blue-600" id="grand-total">2.141.100 VNĐ</strong>
+                </div>
+
+                <button class="checkout-btn">TIẾN HÀNH ĐẶT HÀNG</button>
+            </div>
+            
+        </div>
+
+        <div class="continue-shopping text-center mt-8">
+            <p>
+                <a href="/demo/src/main/resources/Trang chủ/TKW.html" class="text-gray-700 hover:text-blue-600 transition font-bold">&larr; Tiếp tục mua sắm</a>
+            </p>
+        </div>
+        
+    </div>
+
+    <div id="footer" class="bg-gray-800 text-center py-4 mt-10">
+        <p class="text-gray-400 text-sm">&copy; 2025 Torano Vietnam. Cảm ơn bạn đã mua hàng.</p>
+    </div>
+
+    <script>
+        // Giá trị discount cố định (10%)
+        let DISCOUNT_RATE = 0.10;
+        let isCouponApplied = true; // Giả lập coupon đã được áp dụng ban đầu
+        let productToDeleteRow = null; // Biến tạm lưu trữ thẻ <tr> cần xóa
+
+        // Mapping các sản phẩm với giá gốc (dựa trên data-price trong HTML)
+        const productPrices = {
+            'psm001': 599000,
+            'pqa005': 890000
+        };
+
+        // --- UTILITY FUNCTIONS ---
+
+        // Hàm chuyển đổi số sang định dạng tiền tệ Việt Nam (VND)
+        const formatVND = (amount) => {
+            // Đảm bảo amount là số không âm
+            const displayAmount = Math.max(0, amount);
+            return new Intl.NumberFormat('vi-VN', { 
+                style: 'currency', 
+                currency: 'VND',
+                minimumFractionDigits: 0 
+            }).format(displayAmount).replace('₫', ' VNĐ'); // Thay thế ký hiệu ₫ bằng VNĐ
+        };
+
+        // Hàm tính toán và cập nhật Tổng Cộng cho một dòng sản phẩm
+        const updateProductTotal = (quantityInput) => {
+            const rowElement = quantityInput.closest('tr'); // Tìm thẻ <tr> cha
+            const productId = quantityInput.getAttribute('data-product-id');
+            const price = productPrices[productId]; // Lấy giá gốc từ mapping
+
+            const totalElement = rowElement.querySelector('.cart-total');
+            
+            // 1. Lấy số lượng và chuẩn hóa
+            let quantity = parseInt(quantityInput.value) || 1;
+            if (quantity < 1 || isNaN(quantity)) {
+                quantity = 1;
+            }
+            quantityInput.value = quantity; // Cập nhật lại giá trị input nếu cần
+
+            // 2. Tính toán
+            const productTotal = price * quantity;
+            
+            // 3. Cập nhật hiển thị Tổng Cộng
+            totalElement.textContent = formatVND(productTotal);
+
+            return productTotal;
+        };
+
+        // Hàm tính toán và cập nhật Tổng Tiền Hàng (Subtotal) và Tổng Thanh Toán
+        const updateCartSummary = () => {
+            // Dùng document.querySelectorAll để lấy các input hiện có (sau khi xóa)
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+            let subtotal = 0;
+
+            // 1. Tính Tổng Tiền Hàng (Subtotal)
+            quantityInputs.forEach(input => {
+                // Chỉ tính toán nếu dòng sản phẩm còn tồn tại
+                if (input.closest('tr')) {
+                    subtotal += updateProductTotal(input); 
+                }
+            });
+
+            // Nếu giỏ hàng trống
+            if (subtotal === 0) {
+                 // Thay thế bảng bằng thông báo giỏ hàng trống
+                 document.getElementById('cart-table-container').innerHTML = '<p class="text-center py-10 text-xl text-gray-500">Giỏ hàng của bạn đang trống.</p>';
+                 isCouponApplied = false; // Tắt coupon nếu giỏ hàng trống
+            }
+
+            // 2. Tính Giảm Giá
+            let discount = 0;
+            if (isCouponApplied) {
+                discount = Math.round(subtotal * DISCOUNT_RATE);
+            }
+
+            // 3. Tính Tổng Thanh Toán (Phí vận chuyển = 0)
+            const grandTotal = subtotal - discount;
+
+            // 4. Cập nhật hiển thị
+            document.getElementById('subtotal').textContent = formatVND(subtotal);
+            document.getElementById('discount-amount').textContent = `- ${formatVND(discount)}`;
+            document.getElementById('grand-total').textContent = formatVND(grandTotal);
+        };
+
+        // Hàm xử lý click nút Xóa (hiển thị modal)
+        const removeProduct = (event) => {
+            // Đảm bảo chỉ xử lý khi click vào nút Xóa
+            if (event.target.classList.contains('remove-btn')) {
+                const rowElement = event.target.closest('tr');
+                productToDeleteRow = rowElement; // Lưu lại hàng cần xóa
+
+                // Lấy tên sản phẩm để hiển thị trong modal
+                const productName = rowElement.querySelector('.product-name a').textContent;
+                
+                // Cập nhật nội dung và hiển thị modal
+                document.getElementById('modal-message').textContent = `Bạn có chắc chắn muốn xóa sản phẩm "${productName}" khỏi giỏ hàng?`;
+                document.getElementById('custom-modal').classList.remove('hidden');
+                document.getElementById('custom-modal').classList.add('flex'); // Hiển thị modal
+            }
+        };
+
+        // --- EVENT LISTENERS ---
+        
+        // 1. Lắng nghe sự kiện thay đổi trên TẤT CẢ các ô số lượng
+        const attachQuantityListeners = () => {
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+            quantityInputs.forEach(input => {
+                // Xóa các listener cũ để tránh trùng lặp nếu có logic phức tạp hơn
+                input.removeEventListener('input', updateCartSummary);
+                input.removeEventListener('change', updateCartSummary);
+                
+                // Lắng nghe cả 'input' (khi gõ) và 'change' (khi dùng nút mũi tên hoặc rời focus)
+                input.addEventListener('input', updateCartSummary);
+                input.addEventListener('change', updateCartSummary);
+            });
+        };
+
+        // 2. Lắng nghe sự kiện click trên toàn bộ body để bắt sự kiện xóa sản phẩm
+        // Sử dụng event delegation trên table body để bắt sự kiện click nút Xóa
+        document.getElementById('cart-table').addEventListener('click', removeProduct);
+        
+        // 3. Logic xác nhận XÓA từ Custom Modal
+        document.getElementById('modal-confirm-btn').addEventListener('click', () => {
+            if (productToDeleteRow) {
+                // Xóa hàng khỏi bảng
+                productToDeleteRow.remove();
+                
+                // Cập nhật lại tổng tiền hàng
+                updateCartSummary();
+                productToDeleteRow = null; // Reset biến lưu trữ
+            }
+            // Ẩn modal
+            document.getElementById('custom-modal').classList.add('hidden');
+            document.getElementById('custom-modal').classList.remove('flex');
+        });
+
+        // 4. Logic HỦY từ Custom Modal
+        document.getElementById('modal-cancel-btn').addEventListener('click', () => {
+            productToDeleteRow = null; // Reset biến lưu trữ
+            // Ẩn modal
+            document.getElementById('custom-modal').classList.add('hidden');
+            document.getElementById('custom-modal').classList.remove('flex');
+        });
+        
+        // 5. Logic click ra ngoài modal để HỦY
+        document.getElementById('custom-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'custom-modal') {
+                productToDeleteRow = null; // Reset
+                document.getElementById('custom-modal').classList.add('hidden');
+                document.getElementById('custom-modal').classList.remove('flex');
+            }
+        });
+
+
+        // 6. Lắng nghe sự kiện áp dụng mã giảm giá (Mock logic)
+        document.getElementById('apply-coupon-btn').addEventListener('click', () => {
+            const couponCode = document.getElementById('coupon-input').value.trim().toUpperCase();
+            const messageElement = document.getElementById('coupon-message');
+            
+            if (couponCode === 'SALE10') {
+                if (document.querySelectorAll('.quantity-input').length === 0) {
+                     messageElement.textContent = `Không thể áp dụng mã: Giỏ hàng trống.`;
+                     messageElement.classList.remove('text-green-600');
+                     messageElement.classList.add('text-red-500');
+                     return;
+                }
+
+                isCouponApplied = true;
+                DISCOUNT_RATE = 0.10;
+                document.getElementById('discount-percent').textContent = '10';
+                messageElement.textContent = `Mã giảm giá (${couponCode}) áp dụng thành công (10%)!`;
+                messageElement.classList.remove('text-red-500');
+                messageElement.classList.add('text-green-600');
+            } else {
+                isCouponApplied = false;
+                DISCOUNT_RATE = 0;
+                document.getElementById('discount-percent').textContent = '0';
+                messageElement.textContent = `Mã giảm giá không hợp lệ. Giảm giá bị hủy.`;
+                messageElement.classList.remove('text-green-600');
+                messageElement.classList.add('text-red-500');
+            }
+
+            // Cập nhật lại toàn bộ giỏ hàng sau khi thay đổi trạng thái coupon
+            updateCartSummary();
+        });
+
+
+        // --- INITIALIZATION ---
+        
+        window.onload = () => {
+            attachQuantityListeners();
+            updateCartSummary();
+        };
+
+    </script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const cartContainer = document.getElementById("cart-container");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>🛒 Giỏ hàng trống.</p>";
+        return;
+    }
+
+    cart.forEach(item => {
+        const productEl = document.createElement("div");
+        productEl.className = "flex items-center justify-between p-4 border-b";
+        productEl.innerHTML = `
+            <div class="flex items-center space-x-4">
+                <img src="${item.img}" class="w-16 h-16 rounded" alt="${item.name}">
+                <div>
+                    <h3 class="font-bold">${item.name}</h3>
+                    <p class="text-gray-500">${item.price.toLocaleString()} VNĐ</p>
+                </div>
+            </div>
+            <div>
+                <span>Số lượng: ${item.quantity}</span>
+            </div>
+        `;
+        cartContainer.appendChild(productEl);
+    });
+});
+</script>
+
+</body>
+</html>

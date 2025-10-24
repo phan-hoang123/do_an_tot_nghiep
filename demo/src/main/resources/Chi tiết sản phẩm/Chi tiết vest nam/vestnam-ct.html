@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Áo Vest Nam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f7f7; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 1rem; }
+        .header { background-color: #1a202c; color: white; padding: 1rem 0; text-align: center; }
+        .navbar ul { display: flex; justify-content: center; background-color: #2d3748; padding: 0.75rem 0; }
+        .navbar li a { color: white; padding: 0.5rem 1rem; display: block; text-decoration: none; transition: background-color 0.3s; border-radius: 0.25rem; }
+        .navbar li a:hover { background-color: #4a5568; }
+        .product-image-gallery img { cursor: pointer; border: 2px solid transparent; border-radius: 0.5rem; transition: border-color 0.2s; }
+        .product-image-gallery img.active { border-color: #4299e1; }
+        .buy-btn { display: block; width: 100%; padding: 1rem; text-align: center; color: white; font-weight: bold; border-radius: 0.5rem; transition: background-color 0.3s, opacity 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .buy-btn:hover { opacity: 0.9; }
+        
+        /* CSS cho thông báo tùy chỉnh */
+        .add-to-cart-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            display: flex; 
+            align-items: center;
+        }
+        .add-to-cart-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hidden { display: none !important; }
+
+        .size-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+        }
+
+        [data-color].selected {
+            border: 4px solid #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Nút giỏ hàng nhỏ trên góc phải */
+        .cart-icon-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 9999px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+        }
+        .cart-icon-btn:hover { background-color: #2563eb; }
+        .cart-item-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #ef4444;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            line-height: 1;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            transform: translate(30%, -30%);
+            min-width: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="header">
+        <div class="container">
+            <h1 class="text-3xl font-bold">HOANG STORE</h1>
+            <p class="text-sm">Thương Hiệu Thời Trang Nam</p>
+        </div>
+    </div>
+    
+    <div class="navbar">
+        <ul>
+            <li><a href="trangchu.html">TRANG CHỦ</a></li>
+            <li><a href="sanphammoi.html">SẢN PHẨM MỚI</a></li>
+            <li><a href="/demo/src/main/resources/Sản phẩm/aovest.html" class="bg-blue-600 hover:bg-blue-700">ÁO VEST</a></li>
+            <li><a href="/demo/src/main/resources/Sản phẩm/aophong.html">ÁO PHÔNG</a></li>
+            <li><a href="/demo/src/main/resources/Sản phẩm/quannam.html">QUẦN NAM</a></li>
+            <li><a href="/demo/src/main/resources/Sản phẩm/phukien.html">PHỤ KIỆN & GIÀY DÉP</a></li>
+            <li><a href="/demo/src/main/resources/Thông tin cửa hàng/tintuc.html">TIN TỨC</a></li>
+            <li><a href="/demo/src/main/resources/Thông tin cửa hàng/lienhe.html">LIÊN HỆ</a></li>
+        </ul>
+    </div>
+
+    <div class="container mt-8">
+        <nav class="text-sm text-gray-500 mb-4">
+            <a href="trangchu.html" class="hover:underline">Trang chủ</a> &gt; 
+            <a href="/demo/src/main/resources/Sản phẩm/aovest.html" class="hover:underline">Áo Vest</a> &gt; 
+            <span class="font-semibold">Áo Vest Nam Công Sở</span>
+        </nav>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg flex flex-wrap -mx-4">
+            
+            <!-- Hình ảnh -->
+            <div class="w-full lg:w-1/2 px-4 mb-6 lg:mb-0">
+                <div class="main-image-container mb-4">
+                    <img id="main-product-image" src="https://placehold.co/600x600/1e3a8a/ffffff?text=VEST+MAIN" alt="Áo Vest Nam Chính" class="w-full h-auto rounded-xl shadow-md">
+                </div>
+                <div class="product-image-gallery flex space-x-2 overflow-x-auto">
+                    <img src="https://placehold.co/100x100/1e3a8a/ffffff?text=VEST+1" alt="Vest Nam 1" class="w-20 h-20 object-cover rounded-xl active" onclick="changeMainImage(this)">
+                    <img src="https://placehold.co/100x100/3b82f6/ffffff?text=VEST+2" alt="Vest Nam 2" class="w-20 h-20 object-cover rounded-xl" onclick="changeMainImage(this)">
+                    <img src="https://placehold.co/100x100/60a5fa/ffffff?text=VEST+3" alt="Vest Nam 3" class="w-20 h-20 object-cover rounded-xl" onclick="changeMainImage(this)">
+                    <img src="https://placehold.co/100x100/93c5fd/ffffff?text=VEST+4" alt="Vest Nam 4" class="w-20 h-20 object-cover rounded-xl" onclick="changeMainImage(this)">
+                </div>
+            </div>
+
+            <!-- Thông tin & Tùy chọn -->
+            <div class="w-full lg:w-1/2 px-4">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Áo Vest Nam Cao Cấp Dáng Slimfit</h1>
+                <p class="text-gray-600 mb-4">Mã SP: VEST001</p>
+                <p class="text-xl font-bold text-red-600 mb-4">1.250.000 VNĐ <span class="text-base text-gray-500 line-through ml-2">1.500.000 VNĐ</span></p>
+
+                <div class="mb-4">
+                    <h3 class="font-semibold text-gray-700 mb-2">Màu sắc:</h3>
+                    <div class="flex space-x-3">
+                        <div class="color-option w-8 h-8 rounded-full border-2 border-gray-300 bg-gray-800 cursor-pointer hover:border-blue-500 transition-all" title="Đen" data-color="Đen"></div>
+                        <div class="color-option w-8 h-8 rounded-full border-2 border-gray-300 bg-blue-800 cursor-pointer hover:border-blue-500 transition-all" title="Xanh Navy" data-color="Xanh Navy"></div>
+                        <div class="color-option w-8 h-8 rounded-full border-2 border-gray-300 bg-gray-600 cursor-pointer hover:border-blue-500 transition-all" title="Ghi" data-color="Ghi"></div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-semibold text-gray-700 mb-2">Kích thước:</h3>
+                    <div class="flex space-x-2">
+                        <button class="size-btn px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500 transition-colors" data-size="S">S</button>
+                        <button class="size-btn px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500 transition-colors" data-size="M">M</button>
+                        <button class="size-btn px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500 transition-colors" data-size="L">L</button>
+                        <button class="size-btn px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500 transition-colors" data-size="XL">XL</button>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="font-semibold text-gray-700 mb-2">Số lượng:</h3>
+                    <div class="flex items-center space-x-2">
+                        <button id="decrease-qty" class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors">-</button>
+                        <input type="text" id="product-qty" value="1" class="w-16 text-center border border-gray-300 rounded-md py-1" readonly>
+                        <button id="increase-qty" class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors">+</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-3">
+                    <!-- Nút MUA NGAY sẽ chuyển hướng đến trang giỏ hàng -->
+                    <button id="buy-now-btn" class="buy-btn bg-red-600 hover:bg-red-700">MUA NGAY (Chuyển đến Giỏ Hàng)</button>
+                    <!-- Nút THÊM VÀO GIỎ HÀNG -->
+                    <button id="add-to-cart-btn" class="buy-btn bg-blue-600 hover:bg-blue-700">THÊM VÀO GIỎ HÀNG</button>
+                </div>
+
+                <div class="mt-6 text-sm text-gray-700">
+                    <h3 class="font-semibold mb-2">Mô tả sản phẩm:</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Chất liệu: Vải cao cấp chống nhăn, thoáng khí.</li>
+                        <li>Thiết kế: Dáng Slimfit hiện đại, tôn dáng.</li>
+                        <li>Phù hợp: Công sở, sự kiện, tiệc tùng.</li>
+                        <li>Đặc điểm: Ve áo notch lapel truyền thống, túi áo hai bên tiện lợi.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Thông báo tùy chỉnh -->
+    <div id="add-to-cart-message" class="add-to-cart-message hidden">
+        <svg id="message-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path id="check-icon" class="hidden" d="M9 12l2 2 4-4"/></svg>
+        <span id="message-text"></span>
+    </div>
+
+    <!-- Nút giỏ hàng nhỏ góc phải để liên kết đến trang giỏ hàng -->
+    <a href="/demo/src/main/resources/Trang chủ/Giỏ hàng/giohang.html" id="cart-icon-btn" class="cart-icon-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        <span id="cart-item-count" class="cart-item-count">0</span>
+    </a>
+
+
+    <script>
+        // Data sản phẩm
+        const PRODUCT_DATA = {
+            id: 'VEST001',
+            name: 'Áo Vest Nam Cao Cấp Dáng Slimfit',
+            price: 1250000,
+            originalPrice: 1500000,
+            image: 'https://placehold.co/100x100/1e3a8a/ffffff?text=VEST'
+        };
+
+        // State cho sản phẩm được chọn
+        let selectedSize = '';
+        let selectedColor = '';
+        let quantity = 1;
+
+        // --- Hàm tiện ích ---
+        
+        // Function for displaying messages (success or error)
+        function displayMessage(message, type = 'success', duration = 3500) {
+            const msgBox = document.getElementById('add-to-cart-message');
+            const icon = document.getElementById('message-icon');
+            const checkIcon = document.getElementById('check-icon');
+            const messageText = document.getElementById('message-text');
+
+            messageText.textContent = message;
+            
+            // Set style
+            msgBox.style.backgroundColor = type === 'error' ? '#e53e3e' : '#4CAF50'; 
+            
+            if (type === 'error') {
+                icon.style.stroke = 'currentColor';
+                checkIcon.classList.add('hidden');
+            } else {
+                icon.style.stroke = 'none';
+                checkIcon.classList.remove('hidden');
+            }
+
+            msgBox.classList.remove('hidden');
+            // Force transition
+            setTimeout(() => {
+                msgBox.classList.add('visible');
+            }, 10); 
+
+            // Auto hide
+            setTimeout(() => { 
+                msgBox.classList.remove('visible'); 
+                setTimeout(() => msgBox.classList.add('hidden'), 300);
+            }, duration);
+        }
+
+        // Cập nhật số lượng item trên icon giỏ hàng
+        function updateCartIconCount() {
+            const cart = JSON.parse(localStorage.getItem('shoppingCart') || '[]');
+            // Tính tổng số lượng sản phẩm, không phải số loại sản phẩm khác nhau
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-item-count').textContent = totalItems;
+        }
+
+        // --- Logic thêm sản phẩm vào giỏ hàng ---
+        function addToCart(shouldRedirect = false) {
+            // Kiểm tra BẮT BUỘC đã chọn size và màu chưa
+            if (!selectedSize || !selectedColor) {
+                let missing = [];
+                if (!selectedSize) missing.push('Kích thước');
+                if (!selectedColor) missing.push('Màu sắc');
+                
+                displayMessage(`Vui lòng chọn ${missing.join(' và ')} trước khi mua!`, 'error');
+                return false; // Trả về false nếu thất bại
+            }
+
+            let cart = JSON.parse(localStorage.getItem('shoppingCart') || '[]');
+            const productSku = `${PRODUCT_DATA.id}-${selectedSize}-${selectedColor}`;
+            const existingItemIndex = cart.findIndex(item => item.sku === productSku);
+
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                cart.push({
+                    id: PRODUCT_DATA.id,
+                    name: PRODUCT_DATA.name,
+                    price: PRODUCT_DATA.price,
+                    quantity: quantity,
+                    size: selectedSize,
+                    color: selectedColor,
+                    image: PRODUCT_DATA.image, 
+                    sku: productSku 
+                });
+            }
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+            updateCartIconCount();
+            
+            // Xử lý thông báo và chuyển hướng
+            if (shouldRedirect) {
+                displayMessage('Đã thêm sản phẩm vào giỏ. Chuyển hướng đến giỏ hàng...', 'success', 1000);
+                setTimeout(() => {
+                    // Chuyển hướng thành công
+                    window.location.href = 'gio_hang.html'; 
+                }, 1000);
+            } else {
+                displayMessage(`Đã thêm ${quantity} sản phẩm ${PRODUCT_DATA.name} vào giỏ hàng!`, 'success');
+            }
+            return true; // Trả về true nếu thành công
+        }
+
+        // --- Cập nhật hình ảnh chính ---
+        function changeMainImage(thumbnail) {
+            document.querySelectorAll('.product-image-gallery img').forEach(img => {
+                img.classList.remove('active');
+            });
+            thumbnail.classList.add('active');
+            document.getElementById('main-product-image').src = thumbnail.src;
+        }
+
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Khởi tạo trạng thái ban đầu
+            document.querySelectorAll('.product-image-gallery img')[0].classList.add('active');
+            updateCartIconCount(); // Cập nhật số lượng trên icon
+
+            // Chọn Size
+            document.querySelectorAll('.size-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedSize = button.dataset.size;
+                });
+            });
+
+            // Chọn Màu
+            document.querySelectorAll('.color-option').forEach(div => {
+                div.addEventListener('click', () => {
+                    document.querySelectorAll('.color-option').forEach(d => d.classList.remove('selected'));
+                    div.classList.add('selected');
+                    selectedColor = div.dataset.color;
+                });
+            });
+
+            // Tăng giảm số lượng
+            document.getElementById('decrease-qty').addEventListener('click', () => {
+                if (quantity > 1) {
+                    quantity--;
+                    document.getElementById('product-qty').value = quantity;
+                }
+            });
+            document.getElementById('increase-qty').addEventListener('click', () => {
+                quantity++;
+                document.getElementById('product-qty').value = quantity;
+            });
+
+            // --- Nút THÊM VÀO GIỎ HÀNG (Chỉ thêm, không chuyển hướng) ---
+            document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+                // Kiểm tra và thêm vào giỏ, không chuyển hướng (false)
+                addToCart(false);
+            });
+
+            // --- Nút MUA NGAY (Thêm vào giỏ và chuyển hướng) ---
+            document.getElementById('buy-now-btn').addEventListener('click', () => {
+                // Kiểm tra và thêm vào giỏ, sau đó chuyển hướng (true)
+                addToCart(true); 
+            });
+        });
+
+    </script>
+</body>
+</html>

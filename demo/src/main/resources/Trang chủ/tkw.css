@@ -2,7 +2,7 @@ body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8; /* Nền sáng */
+            background-color: #f8f8f8;
             color: #333;
             line-height: 1.6;
         }
@@ -19,12 +19,9 @@ body {
         }
 
         a:hover {
-            color: #c00; /* Hiệu ứng hover màu đỏ cho liên kết */
+            color: #c00; 
         }
 
-        /* =============================================== */
-        /* HEADER - Phần đầu trang */
-        /* =============================================== */
         #header {
             background-color: #1a1a1a;
             color: white;
@@ -45,7 +42,6 @@ body {
             color: #ccc;
         }
 
-        /* Thanh điều hướng */
         #navbar ul {
             list-style: none;
             padding: 0;
@@ -73,7 +69,6 @@ body {
             color: #ffcc00;
         }
         
-        /* Tiện ích (Search/Cart) */
         #utility {
             padding: 10px 0;
             display: flex;
@@ -102,9 +97,6 @@ body {
             margin-left: 15px;
         }
 
-        /* =============================================== */
-        /* MAIN CONTENT - Nội dung chính */
-        /* =============================================== */
         #main-content {
             padding: 40px 0;
         }
@@ -120,7 +112,6 @@ body {
             padding-bottom: 5px;
         }
 
-        /* Banner */
         #banner-area {
             background-color: #c00;
             color: white;
@@ -139,7 +130,6 @@ body {
             text-transform: uppercase;
         }
 
-        /* Danh Mục Nổi Bật */
         #featured-categories {
             display: flex;
             justify-content: space-around;
@@ -169,7 +159,6 @@ body {
             margin-top: 10px;
         }
 
-        /* Sản Phẩm */
         #product-listing {
             display: grid;
             grid-template-columns: repeat(4, 1fr); /* 4 cột sản phẩm */
@@ -227,9 +216,8 @@ body {
             background-color: #c00;
         }
 
-        /* Phân Trang */
         #pagination {
-            grid-column: 1 / -1; /* Chiếm hết 4 cột */
+            grid-column: 1 / -1; 
             text-align: center;
             padding: 20px 0;
         }
@@ -246,7 +234,6 @@ body {
             background-color: #eee;
         }
 
-        /* Về Chúng Tôi */
         #about-us {
             margin-top: 40px;
             padding: 30px;
@@ -260,9 +247,6 @@ body {
             display: inline-block;
         }
         
-        /* =============================================== */
-        /* FOOTER - Phần chân trang */
-        /* =============================================== */
         #footer {
             background-color: #1a1a1a;
             color: #ccc;

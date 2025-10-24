@@ -1,83 +1,373 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="taikhoan.css">
+    <title>Đăng Nhập/Đăng Ký Tài Khoản</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Thiết lập font Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f8;
+        }
+        .auth-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+        }
+        /* Style cho trang chủ */
+        .homepage-layout {
+            display: none; /* Mặc định ẩn, chỉ hiển thị sau khi đăng nhập */
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            min-height: 80vh;
+        }
+        .sidebar {
+            background-color: #f8fafc; /* bg-gray-50 */
+            padding: 24px;
+            border-right: 1px solid #e2e8f0;
+        }
+        .sidebar a {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            display: block;
+            font-weight: 500;
+            color: #4b5563; /* text-gray-600 */
+            transition: background-color 0.2s;
+        }
+        .sidebar a.active, .sidebar a:hover {
+            background-color: #e0f2f1; /* custom light teal for active/hover */
+            color: #0d9488; /* custom teal for active/hover */
+            font-weight: 600;
+        }
+    </style>
 </head>
-<body>
-     <div id="header-simple">
-        <h1>QUẢN LÝ TÀI KHOẢN</h1>
+<body class="flex flex-col items-center">
+
+    <!-- Message Box (Not using alert()) -->
+    <div id="message-box" class="fixed top-4 w-full max-w-lg mx-auto z-50 hidden p-3 rounded-lg text-sm font-medium transition duration-300"></div>
+
+    <!-- 1. Giao diện Đăng Nhập/Đăng Ký -->
+    <div id="auth-container" class="auth-card">
+        
+        <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-6">Chào mừng</h1>
+        
+        <!-- Toggle Buttons -->
+        <div class="flex border-b border-gray-200 mb-6">
+            <button id="tab-login-btn" class="flex-1 py-3 text-lg font-semibold border-b-2 border-blue-600 text-blue-600 transition duration-300 hover:bg-gray-50">Đăng Nhập</button>
+            <button id="tab-register-btn" class="flex-1 py-3 text-lg font-semibold text-gray-500 border-b-2 border-transparent transition duration-300 hover:bg-gray-50">Đăng Ký</button>
+        </div>
+        
+        <!-- Auth Content -->
+        <div id="auth-content">
+            
+            <!-- Form Đăng Nhập -->
+            <form id="login-form" class="space-y-5">
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="login-email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="example@email.com" value="test@user.com">
+                </div>
+                
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                    <input type="password" id="login-password" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Mật khẩu của bạn" value="123456">
+                </div>
+                
+                <div class="flex justify-between items-center text-sm">
+                    <a href="#" class="text-blue-600 hover:text-blue-800 transition duration-150">Quên mật khẩu?</a>
+                </div>
+                
+                <button type="submit" id="login-submit-btn" class="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 transition duration-200 shadow-lg shadow-blue-500/50">
+                    ĐĂNG NHẬP
+                </button>
+            </form>
+
+            <!-- Form Đăng Ký -->
+            <form id="register-form" class="space-y-5 hidden">
+                <div>
+                    <label for="reg-name" class="block text-sm font-medium text-gray-700 mb-1">Họ và Tên</label>
+                    <input type="text" id="reg-name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Nguyễn Văn A">
+                </div>
+                
+                <div>
+                    <label for="reg-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="reg-email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="example@email.com">
+                </div>
+                
+                <div>
+                    <label for="reg-password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                    <input type="password" id="reg-password" required minlength="6" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Mật khẩu (tối thiểu 6 ký tự)">
+                </div>
+                
+                <button type="submit" id="register-submit-btn" class="w-full bg-green-600 text-white p-3 rounded-lg font-bold hover:bg-green-700 transition duration-200 shadow-lg shadow-green-500/50">
+                    ĐĂNG KÝ TÀI KHOẢN
+                </button>
+            </form>
+        </div>
+
     </div>
     
-    <div id="account-layout" class="container">
+    <!-- 2. Giao diện Trang Chủ / Quản lý Tài khoản (Thay thế Dashboard giả) -->
+    <div id="homepage-view" class="homepage-layout grid grid-cols-1 md:grid-cols-4">
         
-        <div id="sidebar">
-            <h3>Xin chào, [Tên Khách Hàng]</h3>
-            <ul>
-                <li><a href="#dashboard" class="active">Thông Tin Cá Nhân</a></li>
-                <li><a href="#orders">Lịch Sử Đơn Hàng</a></li>
-                <li><a href="#addresses">Sổ Địa Chỉ Giao Hàng</a></li>
-                <li><a href="#changepassword">Đổi Mật Khẩu</a></li>
-                <li><a href="#reviews">Đánh Giá Của Tôi</a></li>
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar md:col-span-1">
+            <h3 class="text-xl font-bold text-gray-800 mb-6">QUẢN LÝ TÀI KHOẢN</h3>
+            
+            <p class="text-sm font-medium text-gray-500 mb-4">Xin chào, <span id="homepage-user-name" class="font-semibold text-blue-600"></span></p>
+
+            <ul class="space-y-1 text-base">
+                <li><a href="/demo/src/main/resources/Trang chủ/TKW.html" class="active">Trang chủ </a></li>
+            
             </ul>
-            <div id="logout-link">
-                <a href="#logout">Đăng Xuất &rarr;</a>
-            </div>
+            
+            <button id="logout-btn" class="mt-8 text-red-600 hover:text-red-700 transition duration-200 flex items-center p-2 rounded-lg font-semibold w-full text-left">
+                <!-- Icon Đăng Xuất (Sử dụng inline SVG cho tương thích) -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3v-10a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Đăng Xuất
+            </button>
         </div>
 
-        <div id="account-content">
-            <h2>THÔNG TIN TÀI KHOẢN CỦA TÔI</h2>
+        <!-- Content Area -->
+        <div id="account-content" class="md:col-span-3 p-6 sm:p-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">THÔNG TIN TÀI KHOẢN CỦA TÔI</h2>
 
-            <form action="#save-profile" method="POST">
-                
+            <form id="save-profile" class="space-y-6">
+                <!-- Tên -->
                 <div class="info-group">
-                    <label for="name">Họ và Tên</label>
-                    <input type="text" id="name" name="name" value="Nguyễn Văn A" required>
-                </div>
-
-                <div class="info-group">
-                    <label for="email">Địa chỉ Email</label>
-                    <input type="email" id="email" name="email" value="nguyenvana@example.com" disabled style="background-color: #eee;">
-                    <p style="font-size:0.8em; color:#777;">(Email là tài khoản đăng nhập, không thể thay đổi)</p>
-                </div>
-
-                <div class="info-group">
-                    <label for="phone">Số Điện Thoại</label>
-                    <input type="text" id="phone" name="phone" value="0987 654 321">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Họ và Tên</label>
+                    <input type="text" id="homepage-name" name="name" value="[Tên Khách Hàng]" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                 </div>
                 
+                <!-- Email (không cho phép thay đổi) -->
                 <div class="info-group">
-                    <label for="dob">Ngày Sinh</label>
-                    <input type="text" id="dob" name="dob" value="01/01/1990" placeholder="dd/mm/yyyy">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ Email</label>
+                    <input type="email" id="homepage-email" name="email" value="nguyenvan@example.com" disabled style="background-color: #eee;" class="w-full p-3 border border-gray-300 rounded-lg text-gray-500 cursor-not-allowed">
+                    <p class="text-xs text-red-600 mt-1">
+                        Email là tài khoản đăng nhập, không thể thay đổi.
+                    </p>
                 </div>
 
-                <div class="info-group">
-                    <label>Giới Tính</label>
-                    <input type="radio" id="male" name="gender" value="male" checked> 
-                    <label for="male" style="display: inline; font-weight: normal; margin-right: 15px;">Nam</label>
-                    
-                    <input type="radio" id="female" name="gender" value="female"> 
-                    <label for="female" style="display: inline; font-weight: normal;">Nữ</label>
-                </div>
-                
-                <button type="submit" class="save-btn">CẬP NHẬT THÔNG TIN</button>
+                <button type="submit" class="bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 transition duration-200">
+                    LƯU THAY ĐỔI
+                </button>
             </form>
             
-            <hr style="margin-top: 40px; border: 0; border-top: 1px solid #ddd;">
-
-            <div id="orders-summary" style="margin-top: 20px;">
-                <h3>Đơn Hàng Gần Đây</h3>
-                <p>Đơn hàng cuối cùng: #TORANO12345 (Ngày 10/10/2025) - Tình trạng: **Đã Giao Thành Công**</p>
-                <a href="#orders" style="color:#c00; font-weight:bold;">Xem tất cả lịch sử đơn hàng &rarr;</a>
-            </div>
-
         </div>
+
     </div>
 
-    <div id="footer" style="background-color: #1a1a1a; color: #ccc; text-align: center; padding: 20px 0; margin-top: 50px;">
-        <p>&copy; 2025 Torano Vietnam. Cảm ơn bạn đã đồng hành.</p>
-    </div>
+    <script>
+        // ==========================================================
+        // KHỞI TẠO MOCK AUTHENTICATION
+        // ==========================================================
+
+        // Trạng thái người dùng giả lập (Mock User State)
+        let mockUser = {
+            uid: null,
+            email: null,
+            fullName: null,
+            isLoggedIn: false
+        };
+        
+        // ==========================================================
+        // DOM ELEMENTS VÀ UTILS
+        // ==========================================================
+
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const tabLoginBtn = document.getElementById('tab-login-btn');
+        const tabRegisterBtn = document.getElementById('tab-register-btn');
+        const authContainer = document.getElementById('auth-container');
+        const homepageView = document.getElementById('homepage-view'); 
+        const messageBox = document.getElementById('message-box');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginSubmitBtn = document.getElementById('login-submit-btn');
+        const registerSubmitBtn = document.getElementById('register-submit-btn');
+
+        const homepageUserName = document.getElementById('homepage-user-name');
+        const homepageNameInput = document.getElementById('homepage-name');
+        const homepageEmailInput = document.getElementById('homepage-email');
+
+        let currentIsLoginActive = true; 
+
+        // Hàm hiển thị thông báo
+        const showMessage = (message, type = 'info') => {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800', 'bg-blue-100', 'text-blue-800');
+
+            if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-800');
+            } else if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-800');
+            } else {
+                messageBox.classList.add('bg-blue-100', 'text-blue-800');
+            }
+            
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 5000);
+        };
+        
+        // Cập nhật trạng thái các nút submit (Giữ nguyên logic thẩm mỹ)
+        const updateSubmitButtons = (ready) => {
+            // Trong Mock Auth, các nút luôn sẵn sàng
+            loginSubmitBtn.disabled = false;
+            loginSubmitBtn.textContent = 'ĐĂNG NHẬP';
+            loginSubmitBtn.classList.remove('bg-gray-400');
+            loginSubmitBtn.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-blue-500/50');
+            
+            registerSubmitBtn.disabled = false;
+            registerSubmitBtn.textContent = 'ĐĂNG KÝ TÀI KHOẢN';
+            registerSubmitBtn.classList.remove('bg-gray-400');
+            registerSubmitBtn.classList.add('bg-green-600', 'hover:bg-green-700', 'shadow-green-500/50');
+        };
+
+        // Chuyển đổi giữa Đăng Nhập và Đăng Ký
+        const switchForm = (isLogin) => {
+            currentIsLoginActive = isLogin; 
+            if (isLogin) {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                tabLoginBtn.classList.add('border-blue-600', 'text-blue-600');
+                tabLoginBtn.classList.remove('border-transparent', 'text-gray-500');
+                tabRegisterBtn.classList.add('border-transparent', 'text-gray-500');
+                tabRegisterBtn.classList.remove('border-blue-600', 'text-blue-600');
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                tabRegisterBtn.classList.add('border-blue-600', 'text-blue-600');
+                tabRegisterBtn.classList.remove('border-transparent', 'text-gray-500');
+                tabLoginBtn.classList.add('border-transparent', 'text-gray-500');
+                tabLoginBtn.classList.remove('border-blue-600', 'text-blue-600');
+            }
+            messageBox.classList.add('hidden');
+        };
+
+        // HÀM HIỂN THỊ TRANG CHỦ (Dựa trên Mock State)
+        const showHomePage = () => {
+            authContainer.classList.add('hidden');
+            homepageView.style.display = 'grid'; 
+            
+            // Cập nhật các trường trên giao diện Trang Chủ từ mockUser
+            homepageUserName.textContent = mockUser.fullName || mockUser.email;
+            homepageNameInput.value = mockUser.fullName || '';
+            homepageEmailInput.value = mockUser.email || 'Không có Email';
+        };
+
+        // Hàm hiển thị giao diện Auth
+        const showAuth = () => {
+            homepageView.style.display = 'none';
+            authContainer.classList.remove('hidden');
+            updateSubmitButtons(true);
+            switchForm(currentIsLoginActive); 
+        };
+
+        // Khởi tạo trạng thái ban đầu
+        if (mockUser.isLoggedIn) {
+            showHomePage();
+        } else {
+            showAuth();
+        }
+        
+        // ==========================================================
+        // EVENT LISTENERS (MOCK LOGIC)
+        // ==========================================================
+
+        tabLoginBtn.addEventListener('click', () => switchForm(true));
+        tabRegisterBtn.addEventListener('click', () => switchForm(false));
+
+        // Xử lý Đăng Nhập (MOCK SUCCESS)
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const name = email.split('@')[0]; // Lấy tên từ email cho đơn giản
+
+            showMessage('Đang đăng nhập...', 'info');
+
+            // Giả lập độ trễ mạng
+            setTimeout(() => {
+                // Cập nhật trạng thái người dùng giả lập
+                mockUser.isLoggedIn = true;
+                mockUser.email = email;
+                mockUser.fullName = mockUser.fullName || name;
+                mockUser.uid = 'mock-' + Date.now(); // Tạo UID giả lập
+
+                showMessage(`Đăng nhập thành công! Chào mừng, ${mockUser.fullName}`, 'success');
+                showHomePage(); 
+            }, 800);
+        });
+
+        // Xử lý Đăng Ký (MOCK SUCCESS)
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            if (password.length < 6) {
+                showMessage('Lỗi: Mật khẩu phải tối thiểu 6 ký tự.', 'error');
+                return;
+            }
+
+            showMessage('Đang đăng ký...', 'info');
+
+            // Giả lập độ trễ mạng
+            setTimeout(() => {
+                // Cập nhật trạng thái người dùng giả lập
+                mockUser.isLoggedIn = true;
+                mockUser.email = email;
+                mockUser.fullName = name;
+                mockUser.uid = 'mock-' + Date.now(); // Tạo UID giả lập
+
+                showMessage('Đăng ký tài khoản thành công! Tự động chuyển đến Trang Chủ...', 'success');
+                showHomePage();
+            }, 800);
+        });
+        
+        // Xử lý Đăng Xuất (MOCK LOGIC)
+        logoutBtn.addEventListener('click', () => {
+            // Đặt lại trạng thái người dùng giả lập
+            mockUser.isLoggedIn = false;
+            mockUser.email = null;
+            mockUser.fullName = null;
+            mockUser.uid = null;
+            
+            showMessage('Đã đăng xuất thành công.', 'info');
+            showAuth(); 
+        });
+
+        // Xử lý Lưu Thay Đổi Thông Tin Cá Nhân (MOCK LOGIC)
+        document.getElementById('save-profile').addEventListener('submit', (e) => {
+             e.preventDefault();
+             
+             const newName = document.getElementById('homepage-name').value;
+             
+             showMessage('Đang lưu thông tin...', 'info');
+
+             // Giả lập độ trễ mạng
+             setTimeout(() => {
+                mockUser.fullName = newName;
+                homepageUserName.textContent = newName; // Cập nhật tên hiển thị
+                showMessage('Lưu thông tin thành công!', 'success');
+             }, 500);
+        });
+        
+    </script>
 </body>
 </html>

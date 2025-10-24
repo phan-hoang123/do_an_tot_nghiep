@@ -1,188 +1,285 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="tkw.css">
-
+    <title>HOANG STORE - Thời Trang Nam Công Sở</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#1D4ED8', // Primary Brand Color
+                        'brand-dark': '#1F2937', // Dark text/footer color
+                        'light-bg': '#F9FAFB', // Light background
+                        'accent-sale': '#EF4444', // Red for sale prices
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for container, font, and effects */
+        .container {
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        /* Style for the search results dropdown */
+        #search-results-list {
+            display: none;
+            position: absolute;
+            z-index: 50;
+            top: 100%; /* Below the input/button group */
+            right: 0;
+            width: 100%;
+            max-width: 300px;
+            list-style: none;
+            padding: 0;
+            margin-top: 0.25rem;
+        }
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        /* Utility link spacing */
+        #utility a {
+            white-space: nowrap;
+        }
+    </style>
 </head>
-<body>
-    <div id="header">
-        <div class="container">
-            <h1>HOANG STORE</h1>
-            <p>Thương Hiệu Thời Trang Nam</p>
+<body class="bg-light-bg font-sans text-brand-dark">
+    
+    <!-- Header -->
+    <div id="header" class="bg-white shadow-lg sticky top-0 z-20">
+        <div class="container py-4 flex flex-col md:flex-row md:items-center justify-between">
+            <div class="text-center md:text-left mb-4 md:mb-0">
+                <h1 class="text-3xl font-extrabold text-brand-blue tracking-wider">HOANG STORE</h1>
+                <p class="text-sm text-gray-600">Thương Hiệu Thời Trang Nam</p>
+            </div>
             
-            <div id="utility">
-                <input type="text" id="product-search-input" placeholder="Tìm kiếm sản phẩm...">
-                <button id="search-submit-button">Tìm Kiếm</button>
-                <ul id="search-results-list"></ul>
-                <a href="giohang.html">Giỏ Hàng</a>
-                <a href="taikhoan.html">Đăng Nhập/Đăng Ký</a>
-                <script src="/demo/src/main/resources/templates/Phukien.js"></script>
+            <div id="utility" class="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4 relative">
+                
+                <div class="flex w-full sm:w-auto relative">
+                    <input type="text" id="product-search-input" placeholder="Tìm kiếm sản phẩm..." class="p-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue w-full sm:w-[200px] lg:w-[250px]">
+                    <button id="search-submit-button" class="bg-brand-blue text-white p-2 rounded-r-lg hover:bg-blue-700 transition duration-200 flex-shrink-0">Tìm Kiếm</button>
+                    <!-- Search Results Dropdown -->
+                    <ul id="search-results-list" class="bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden mt-1 max-h-60 overflow-y-auto">
+                        <!-- Search results will be injected here -->
+                    </ul>
+                </div>
+                
+                <div class="flex space-x-4 text-sm font-medium w-full sm:w-auto justify-center">
+                    <a href="/demo/src/main/resources/Trang chủ/Giỏ hàng/giohang.html" class="text-gray-700 hover:text-brand-blue transition duration-200">Giỏ Hàng</a>
+                    <a href="/demo/src/main/resources/Tài khoản/taikhoan.html" class="text-gray-700 hover:text-brand-blue transition duration-200">Đăng Nhập/Đăng Ký</a>
+                </div>
             </div>
         </div>
     </div>
     
-    <div id="navbar">
-        <ul>
-            <li><a href="trangchu.html">TRANG CHỦ</a></li>
-            <li><a href="sanphammoi.html">SẢN PHẨM MỚI</a></li>
-            <li><a href="/demo/src/main/resources/Sản phẩm/aosomi.html">ÁO SƠ MI</a></li>
-            <li><a href="/demo/src/main/resources/Sản phẩm/aophong.html">ÁO PHÔNG</a></li>
-            <li><a href="/demo/src/main/resources/Sản phẩm/quannam.html">QUẦN NAM</a></li>
-            <li><a href="/demo/src/main/resources/Sản phẩm/phukien.html">PHỤ KIỆN & GIÀY DÉP</a></li>
-            <li><a href="/demo/src/main/resources/Thông tin cửa hàng/tintuc.html">TIN TỨC</a></li>
-            <li><a href="/demo/src/main/resources/Thông tin cửa hàng/lienhe.html">LIÊN HỆ</a></li>
-        </ul>
+    <!-- Navbar -->
+    <div id="navbar" class="bg-brand-dark text-white shadow-xl">
+        <div class="container">
+            <ul class="flex overflow-x-auto whitespace-nowrap justify-center space-x-6 md:space-x-8 py-3 text-sm font-semibold">
+                <li><a href="sanphammoi.html" class="hover:text-brand-blue transition duration-150 p-1 border-b-2 border-transparent hover:border-brand-blue">SẢN PHẨM MỚI</a></li>
+                <li><a href="/demo/src/main/resources/Sản phẩm/áo sơ mi/aosomi.html" class="hover:text-brand-blue transition duration-150 p-1 border-b-2 border-transparent hover:border-brand-blue">ÁO SƠ MI</a></li>
+                <li><a href="/demo/src/main/resources/Sản phẩm/áo phông/aophong.html" class="hover:text-brand-blue transition duration-150 p-1 border-b-2 border-transparent hover:border-brand-blue">ÁO PHÔNG</a></li>
+                <li><a href="/demo/src/main/resources/Sản phẩm/quần nam/quannam.html" class="hover:text-brand-blue transition duration-150 p-1 border-b-2 border-transparent hover:border-brand-blue">QUẦN NAM</a></li>
+                <li><a href="/demo/src/main/resources/Sản phẩm/phụ kiện/phukien.html" class="hover:text-brand-blue transition duration-150 p-1 border-b-2 border-transparent hover:border-brand-blue">PHỤ KIỆN & GIÀY DÉP</a></li>
+                <li><a href="/demo/src/main/resources/Thông tin cửa hàng/lienhe.html" class="hover:text-brand-blue transition duration-150 p-1 border-b-2 border-transparent hover:border-brand-blue">TIN TỨC</a></li>
+                <li><a href="/demo/src/main/resources/Thông tin cửa hàng/tintuc.html" class="hover:text-brand-blue transition duration-150 p-1 border-b-2 border-transparent hover:border-brand-blue">LIÊN HỆ</a></li>
+            </ul>
+        </div>
     </div>
 
-    <div id="main-content" class="container">
+    <div id="main-content" class="container py-8">
 
-        <div id="banner-area">
-            <h2>ƯU ĐÃI ĐỘC QUYỀN - GIẢM ĐẾN 50%</h2>
-            <p>Khám phá bộ sưu tập mới nhất</p>
-            <a href="/demo/src/main/resources/Khuyến mãi/xemngay.html">XEM NGAY CÁC SẢN PHẨM SALE</a>
+        <!-- Banner Area -->
+        <div id="banner-area" class="bg-brand-blue bg-gradient-to-r from-[#2563EB] to-[#3B82F6] text-white p-8 md:p-12 rounded-xl shadow-2xl mb-12 text-center">
+            <h2 class="text-3xl md:text-5xl font-extrabold mb-2">ƯU ĐÃI ĐỘC QUYỀN - GIẢM ĐẾN 50%</h2>
+            <p class="text-xl md:text-2xl font-light mb-6">Khám phá bộ sưu tập mới nhất</p>
+            <a href="#" class="inline-block bg-white text-brand-blue font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 transform hover:scale-105">XEM NGAY CÁC SẢN PHẨM SALE</a>
         </div>
 
-        <div><h2>DANH MỤC NỔI BẬT</h2></div>
-        <div id="featured-categories"> 
+        <!-- Featured Categories -->
+        <h2 class="text-3xl font-bold text-brand-dark mb-6 border-b-2 border-gray-200 pb-2">DANH MỤC NỔI BẬT</h2>
+        <div id="featured-categories" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"> 
             
-            <div class="category-item">
-                <a href="/demo/src/main/resources/Chi tiết sản phẩm/somi-ct.html">
-                    <img src="https://via.placeholder.com/300x400?text=Ao+Somi+Cong+So" alt="Áo Sơ Mi Công Sở">
-                    <h3>Áo Sơ Mi Dài Tay</h3>
-                    <p>Hoàn hảo cho mọi cuộc họp và sự kiện.</p>
+            <div class="category-item bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <a href="/demo/src/main/resources/Sản phẩm/áo sơ mi/aosomi.html" class="block text-center">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết áo sơ mi/anh(3).jpg" alt="Áo Sơ Mi Công Sở" class="w-full h-auto object-cover rounded-lg mb-4">
+                    <h3 class="text-xl font-bold text-brand-blue mb-2">Áo Sơ Mi Dài Tay</h3>
+                    <p class="text-gray-600 text-sm">Hoàn hảo cho mọi cuộc họp và sự kiện.</p>
                 </a>
             </div>
 
-            <div class="category-item">
-                <a href="/demo/src/main/resources/Chi tiết sản phẩm/quanaul-ct.html">
-                    <img src="https://via.placeholder.com/300x400?text=Quan+Au+Cao+Cap" alt="Quần Âu Khaki">
-                    <h3>Quần Âu Co Giãn</h3>
-                    <p>Thoải mái cho cả ngày dài năng động.</p>
+            <div class="category-item bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <a href="/demo/src/main/resources/Sản phẩm/quần nam/quannam.html" class="block text-center">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết quần âu/anhquanau3.jpg" alt="Quần Âu Kaki" class="w-full h-auto object-cover rounded-lg mb-4">
+                    <h3 class="text-xl font-bold text-brand-blue mb-2">Quần Âu Co Giãn</h3>
+                    <p class="text-gray-600 text-sm">Thoải mái cho cả ngày dài năng động.</p>
                 </a>
             </div>
 
-            <div class="category-item">
-                <a href="/demo/src/main/resources/Chi tiết sản phẩm/polo-ct.html">
-                    <img src="https://via.placeholder.com/300x400?text=Ao+Polo+Thoi+Trang" alt="Áo Polo Nam">
-                    <h3>Áo Polo Thể Thao</h3>
-                    <p>Phong cách Casual lịch lãm.</p>
+            <div class="category-item bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <a href="/demo/src/main/resources/Sản phẩm/áo phông/aophong.html" class="block text-center">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết áo polo/Ảnh áo phông(1).jpg" alt="Áo Polo Nam" class="w-full h-auto object-cover rounded-lg mb-4">
+                    <h3 class="text-xl font-bold text-brand-blue mb-2">Áo Polo Thể Thao</h3>
+                    <p class="text-gray-600 text-sm">Phong cách Casual lịch lãm.</p>
                 </a>
             </div>
         </div>
 
-        <div><h2>CÁC SẢN PHẨM BÁN CHẠY NHẤT</h2></div>
-        <div id="product-listing">
+        <!-- Product Listing -->
+        <h2 class="text-3xl font-bold text-brand-dark mb-6 border-b-2 border-gray-200 pb-2">CÁC SẢN PHẨM BÁN CHẠY NHẤT</h2>
+        <div id="product-listing" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            
+            <!-- Product Card 1 -->
+            <div class="product-card bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between" data-product-id="PSM001">
+                <a href="#" class="block">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết áo sơ mi/Anh4.jpg" alt="Áo Sơ Mi Trắng" class="w-full h-auto object-cover rounded-lg mb-4">
+                </a>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold mb-1"><a href="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết áo sơ mi/somi-ct.html" class="hover:text-brand-blue transition">Sơ Mi Nam Trắng Tay Dài | PSM001</a></h3>
+                    <p class="text-sm text-gray-500">Mã SP: PSM001</p>
+                    <p class="text-sm text-gray-400 line-through">790.000 VNĐ</p>
+                    <p class="text-xl font-extrabold text-accent-sale mb-3">599.000 VNĐ</p>
+                    <p class="text-xs text-gray-600 mb-4">Màu sắc: Trắng, Xanh Nhạt</p>
+                </div>
+                <button class="add-to-cart-btn w-full bg-brand-blue text-white py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-[1.02]">THÊM VÀO GIỎ</button>
+            </div>  
 
-            <div class="product-card">
-                <a href="#product-detail-1">
-                    <img src="https://via.placeholder.com/300x400?text=Somi+Trang+PSM001" alt="Áo Sơ Mi Trắng">
+            <!-- Product Card 2 -->
+            <div class="product-card bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between" data-product-id="PQA005">
+                <a href="#" class="block">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết quần âu/anhquanau5.jpg" alt="Quần Âu Xanh Đen" class="w-full h-auto object-cover rounded-lg mb-4">
                 </a>
-                <h3><a href="#product-detail-1">Sơ Mi Nam Trắng Tay Dài | PSM001</a></h3>
-                <p>Mã SP: PSM001</p>
-                <p>Giá Gốc: 790.000 VNĐ</p>
-                <p><strong>Giá Khuyến Mãi: 599.000 VNĐ</strong></p>
-                <p>Màu sắc: Trắng, Xanh Nhạt</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>  
-
-            <div class="product-card">
-                <a href="#product-detail-2">
-                    <img src="https://via.placeholder.com/300x400?text=Quan+Au+PQA005" alt="Quần Âu Xanh Đen">
-                </a>
-                <h3><a href="#product-detail-2">Quần Âu Vải Nano Chống Nhăn | PQA005</a></h3>
-                <p>Mã SP: PQA005</p>
-                <p>Giá Gốc: 990.000 VNĐ</p>
-                <p><strong>Giá Hiện Tại: 890.000 VNĐ</strong></p>
-                <p>Kích cỡ: 29, 30, 31, 32, 33</p>
-                <button>THÊM VÀO GIỎ</button>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold mb-1"><a href="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết quần âu/quanaul-ct.html" class="hover:text-brand-blue transition">Quần Âu Vải Nano Chống Nhăn | PQA005</a></h3>
+                    <p class="text-sm text-gray-500">Mã SP: PQA005</p>
+                    <p class="text-sm text-gray-400 line-through">990.000 VNĐ</p>
+                    <p class="text-xl font-extrabold text-brand-dark mb-3">890.000 VNĐ</p>
+                    <p class="text-xs text-gray-600 mb-4">Kích cỡ: 29, 30, 31, 32, 33</p>
+                </div>
+                <button class="add-to-cart-btn w-full bg-brand-blue text-white py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-[1.02]">THÊM VÀO GIỎ</button>
             </div>
             
-            <div class="product-card">
-                <a href="#product-detail-3">
-                    <img src="https://via.placeholder.com/300x400?text=Polo+Be+PAP010" alt="Áo Polo Màu Be">
+            <!-- Product Card 3 -->
+            <div class="product-card bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between" data-product-id="PAP010">
+                <a href="#" class="block">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết áo polo/Ảnh áo phông(3).png" alt="Áo Polo Màu Be" class="w-full h-auto object-cover rounded-lg mb-4">
                 </a>
-                <h3><a href="#product-detail-3">Áo Polo Thêu Logo Dệt Kim Cao Cấp | PAP010</a></h3>
-                <p>Mã SP: PAP010</p>
-                <p><strong>Giá: 450.000 VNĐ</strong></p>
-                <p>Chất liệu: Cotton Pique</p>
-                <button>THÊM VÀO GIỎ</button>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold mb-1"><a href="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết áo polo/polo-ct.html" class="hover:text-brand-blue transition">Áo Polo Thêu Logo Cao Cấp | PAP010</a></h3>
+                    <p class="text-sm text-gray-500">Mã SP: PAP010</p>
+                    <p class="text-sm text-gray-400 h-5"></p>
+                    <p class="text-xl font-extrabold text-brand-dark mb-3">450.000 VNĐ</p>
+                    <p class="text-xs text-gray-600 mb-4">Chất liệu: Cotton Pique</p>
+                </div>
+                <button class="add-to-cart-btn w-full bg-brand-blue text-white py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-[1.02]">THÊM VÀO GIỎ</button>
             </div>
             
-            <div class="product-card">
-                <a href="#product-detail-4">
-                    <img src="https://via.placeholder.com/300x400?text=Vest+Ghi+PVT003" alt="Áo Vest Ghi">
+            <!-- Product Card 4 -->
+            <div class="product-card bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between" data-product-id="PVT003">
+                <a href="#" class="block">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết vest nam/anhvestnam2.jpg" alt="Áo Vest Ghi" class="w-full h-auto object-cover rounded-lg mb-4">
                 </a>
-                <h3><a href="#product-detail-4">Bộ Vest Nam 2 Lớp Màu Ghi Thanh Lịch | PVT003</a></h3>
-                <p>Mã SP: PVT003</p>
-                <p>Giá Gốc: 3.500.000 VNĐ</p>
-                <p><strong>Giá Khuyến Mãi: 2.990.000 VNĐ</strong></p>
-                <p>Phân loại: Vest, Quần Vest (Bán tách set)</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>
-            
-            <div class="product-card">
-                <a href="#product-detail-5">
-                    <img src="https://via.placeholder.com/300x400?text=Ao+Phuong+T-Shirt" alt="Áo Phông In Logo">
-                </a>
-                <h3><a href="#product-detail-5">Áo Phông Cotton Cơ Bản | PT012</a></h3>
-                <p>Mã SP: PT012</p>
-                <p><strong>Giá: 320.000 VNĐ</strong></p>
-                <p>Chất liệu: 100% Cotton</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>
-            
-            <div class="product-card">
-                <a href="#product-detail-6">
-                    <img src="https://via.placeholder.com/300x400?text=Giay+Da+Oxford" alt="Giày Da Oxford">
-                </a>
-                <h3><a href="#product-detail-6">Giày Da Oxford Chính Hãng | PG008</a></h3>
-                <p>Mã SP: PG008</p>
-                <p>Giá Gốc: 1.500.000 VNĐ</p>
-                <p><strong>Giá Khuyến Mãi: 1.250.000 VNĐ</strong></p>
-                <p>Loại: Giày Tây Công Sở</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>
-            
-            <div class="product-card">
-                <a href="#product-detail-7">
-                    <img src="https://via.placeholder.com/300x400?text=That+Lung+Da+Bo" alt="Thắt Lưng Da">
-                </a>
-                <h3><a href="#product-detail-7">Thắt Lưng Da Bò Cao Cấp | PTL001</a></h3>
-                <p>Mã SP: PTL001</p>
-                <p><strong>Giá: 690.000 VNĐ</strong></p>
-                <p>Màu sắc: Đen, Nâu</p>
-                <button>THÊM VÀO GIỎ</button>
-            </div>
-            
-            <div class="product-card">
-                <a href="#product-detail-8">
-                    <img src="https://via.placeholder.com/300x400?text=Quan+Khaki+Be" alt="Quần Khaki Màu Be">
-                </a>
-                <h3><a href="#product-detail-8">Quần Kaki Dáng Slimfit Màu Be | PQK004</a></h3>
-                <p>Mã SP: PQK004</p>
-                <p>Giá Gốc: 850.000 VNĐ</p>
-                <p><strong>Giá Hiện Tại: 720.000 VNĐ</strong></p>
-                <p>Chất liệu: Kaki Co Giãn</p>
-                <button>THÊM VÀO GIỎ</button>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold mb-1"><a href="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết vest nam/vestnam-ct.html" class="hover:text-brand-blue transition">Bộ Vest Nam 2 Lớp Màu Ghi | PVT003</a></h3>
+                    <p class="text-sm text-gray-500">Mã SP: PVT003</p>
+                    <p class="text-sm text-gray-400 line-through">3.500.000 VNĐ</p>
+                    <p class="text-xl font-extrabold text-accent-sale mb-3">2.990.000 VNĐ</p>
+                    <p class="text-xs text-gray-600 mb-4">Phân loại: Vest, Quần Vest</p>
+                </div>
+                <button class="add-to-cart-btn w-full bg-brand-blue text-white py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-[1.02]">THÊM VÀO GIỎ</button>
             </div>
 
-            <div id="pagination">
-                <a href="#page1">1</a>
-                <a href="#page2">2</a>
-                <a href="#page3">3</a>
-                <span>...</span>
-                <a href="#next">Trang Kế</a>
+            <!-- Product Card 5 -->
+            <div class="product-card bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between" data-product-id="PT012">
+                <a href="#" class="block">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/chi tiết áo phông/anh3.png" alt="Áo Phông In Logo" class="w-full h-auto object-cover rounded-lg mb-4">
+                </a>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold mb-1"><a href="/demo/src/main/resources/Chi tiết sản phẩm/chi tiết áo phông/aophongcotron-ct.html" class="hover:text-brand-blue transition">Áo Phông Cotton Cơ Bản | PT012</a></h3>
+                    <p class="text-sm text-gray-500">Mã SP: PT012</p>
+                    <p class="text-sm text-gray-400 h-5"></p>
+                    <p class="text-xl font-extrabold text-brand-dark mb-3">320.000 VNĐ</p>
+                    <p class="text-xs text-gray-600 mb-4">Chất liệu: 100% Cotton</p>
+                </div>
+                <button class="add-to-cart-btn w-full bg-brand-blue text-white py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-[1.02]">THÊM VÀO GIỎ</button>
+            </div>
+            
+            <!-- Product Card 6 -->
+            <div class="product-card bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between" data-product-id="PG008">
+                <a href="#" class="block">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết giày nam/anhgiaynam2.jpg" alt="Giày Da Oxford" class="w-full h-auto object-cover rounded-lg mb-4">
+                </a>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold mb-1"><a href="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết giày nam/giayda-ct.html" class="hover:text-brand-blue transition">Giày Da Oxford Chính Hãng | PG008</a></h3>
+                    <p class="text-sm text-gray-500">Mã SP: PG008</p>
+                    <p class="text-sm text-gray-400 line-through">1.500.000 VNĐ</p>
+                    <p class="text-xl font-extrabold text-accent-sale mb-3">1.250.000 VNĐ</p>
+                    <p class="text-xs text-gray-600 mb-4">Loại: Giày Tây Công Sở</p>
+                </div>
+                <button class="add-to-cart-btn w-full bg-brand-blue text-white py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-[1.02]">THÊM VÀO GIỎ</button>
+            </div>
+            
+            <!-- Product Card 7 -->
+            <div class="product-card bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between" data-product-id="PTL001">
+                <a href="#" class="block">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết thắt lưng/anhthatlung3.jpg" alt="Thắt Lưng Da" class="w-full h-auto object-cover rounded-lg mb-4">
+                </a>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold mb-1"><a href="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết thắt lưng/thatlung-ct.html" class="hover:text-brand-blue transition">Thắt Lưng Da Bò Cao Cấp | PTL001</a></h3>
+                    <p class="text-sm text-gray-500">Mã SP: PTL001</p>
+                    <p class="text-sm text-gray-400 h-5"></p>
+                    <p class="text-xl font-extrabold text-brand-dark mb-3">690.000 VNĐ</p>
+                    <p class="text-xs text-gray-600 mb-4">Màu sắc: Đen, Nâu</p>
+                </div>
+                <button class="add-to-cart-btn w-full bg-brand-blue text-white py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-[1.02]">THÊM VÀO GIỎ</button>
+            </div>
+            
+            <!-- Product Card 8 -->
+            <div class="product-card bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between" data-product-id="PQK004">
+                <a href="#" class="block">
+                    <img src="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết quần kaki/anhquankaki3.jpg" alt="Quần Kaki Màu Be" class="w-full h-auto object-cover rounded-lg mb-4">
+                </a>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold mb-1"><a href="/demo/src/main/resources/Chi tiết sản phẩm/Chi tiết quần kaki/quankaki-ct.html" class="hover:text-brand-blue transition">Quần Kaki Dáng Slimfit Màu Be | PQK004</a></h3>
+                    <p class="text-sm text-gray-500">Mã SP: PQK004</p>
+                    <p class="text-sm text-gray-400 line-through">850.000 VNĐ</p>
+                    <p class="text-xl font-extrabold text-accent-sale mb-3">720.000 VNĐ</p>
+                    <p class="text-xs text-gray-600 mb-4">Chất liệu: Kaki Co Giãn</p>
+                </div>
+                <button class="add-to-cart-btn w-full bg-brand-blue text-white py-2 rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-[1.02]">THÊM VÀO GIỎ</button>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="col-span-full flex justify-center space-x-2 mt-8 text-lg">
+                <a href="#page1" class="px-4 py-2 bg-brand-blue text-white font-bold rounded-lg hover:bg-blue-700 transition duration-200">1</a>
+                <a href="#page2" class="px-4 py-2 bg-white text-brand-dark border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200">2</a>
+                <a href="#page3" class="px-4 py-2 bg-white text-brand-dark border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200">3</a>
+                <span class="px-4 py-2 text-gray-500">...</span>
+                <a href="#next" class="px-4 py-2 bg-white text-brand-dark border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200 font-semibold">Trang Kế</a>
             </div>
         </div>
         
-        <div id="about-us">
-            <h2>VỀ CHÚNG TÔI - HOANG STORE</h2>
-            <p>Torano là thương hiệu thời trang nam công sở và casual hàng đầu tại Việt Nam, cam kết mang đến những sản phẩm chất lượng cao, thiết kế tinh tế và giá cả hợp lý. Với sứ mệnh nâng tầm phong cách cho phái mạnh, mỗi sản phẩm Torano đều được chăm chút tỉ mỉ từ khâu chọn chất liệu đến khâu hoàn thiện.</p>
-            <p><strong>Cam kết của Store:</strong></p>
-            <ul>
+        <!-- About Us -->
+        <div id="about-us" class="mt-16 pt-8 border-t border-gray-300">
+            <h2 class="text-3xl font-bold text-brand-dark mb-4">VỀ CHÚNG TÔI - HOANG STORE</h2>
+            <p class="mb-4 text-gray-700 leading-relaxed">Hoang Store là thương hiệu thời trang nam công sở và casual hàng đầu tại Việt Nam, cam kết mang đến những sản phẩm chất lượng cao, thiết kế tinh tế và giá cả hợp lý. Với sứ mệnh nâng tầm phong cách cho phái mạnh, mỗi sản phẩm đều được chăm chút tỉ mỉ từ khâu chọn chất liệu đến khâu hoàn thiện.</p>
+            <p class="font-bold mb-2 text-lg text-brand-blue">Cam kết của Store:</p>
+            <ul class="list-disc list-inside space-y-1 text-gray-700 ml-4">
                 <li>Sản phẩm chính hãng, 100% chất lượng như mô tả.</li>
                 <li>Chính sách đổi trả linh hoạt trong 7 ngày.</li>
                 <li>Miễn phí vận chuyển cho đơn hàng trên 500.000 VNĐ.</li>
@@ -190,38 +287,263 @@
         </div>
     </div>
 
-    <div id="footer">
-        <div class="container" style="display: flex; justify-content: space-around;">
+    <!-- Footer -->
+    <div id="footer" class="bg-brand-dark text-gray-300 py-12">
+        <div class="container grid grid-cols-1 md:grid-cols-3 gap-8">
             <div id="contact-info">
-                <h3>THÔNG TIN LIÊN HỆ</h3>
-                <p><strong>Cửa hàng chính:</strong> Số 123 Phố Thời Trang, Quận Công Sở, Hà Nội.</p>
-                <p><strong>Hotline mua hàng:</strong> 1900 1234 (Miễn phí)</p>
-                <p><strong>Email hỗ trợ:</strong> phanhoang201025@gmail.com</p>
+                <h3 class="text-xl font-bold mb-4 text-white border-b border-gray-700 pb-2">THÔNG TIN LIÊN HỆ</h3>
+                <p class="text-sm mb-1"><strong>Cửa hàng chính:</strong> Số 123 Phố Thời Trang, Quận Công Sở, Hà Nội.</p>
+                <p class="text-sm mb-1"><strong>Hotline mua hàng:</strong> <span class="text-brand-blue font-bold">1900 1234</span> (Miễn phí)</p>
+                <p class="text-sm"><strong>Email hỗ trợ:</strong> phanhoang201025@gmail.com</p>
             </div>
             
             <div id="policy-links">
-                <h3>CHÍNH SÁCH</h3>
-                <ul>
-                    <li><a href="/demo/src/main/resources/Chính sách/cs-doitra.html">Chính sách Đổi trả</a></li>
-                    <li><a href="/demo/src/main/resources/Chính sách/cs-baohanh.html">Chính sách Bảo hành</a></li>
-                    <li><a href="/demo/src/main/resources/Thông tin cửa hàng/hd-muahang.html">Hướng dẫn Mua hàng</a></li>
-                    <li><a href="/demo/src/main/resources/Chính sách/cs-baomat.html">Chính sách Bảo mật</a></li>
+                <h3 class="text-xl font-bold mb-4 text-white border-b border-gray-700 pb-2">CHÍNH SÁCH</h3>
+                <ul class="space-y-1">
+                    <li><a href="#" class="text-sm hover:text-brand-blue transition duration-200">Chính sách Đổi trả</a></li>
+                    <li><a href="#" class="text-sm hover:text-brand-blue transition duration-200">Chính sách Bảo hành</a></li>
+                    <li><a href="#" class="text-sm hover:text-brand-blue transition duration-200">Hướng dẫn Mua hàng</a></li>
+                    <li><a href="#" class="text-sm hover:text-brand-blue transition duration-200">Chính sách Bảo mật</a></li>
                 </ul>
             </div>
 
             <div id="social-media">
-                <h3>KẾT NỐI VỚI HOANG STORE</h3>
-                <p>Theo dõi chúng tôi trên:</p>
-                <a href="#facebook">Facebook</a> | 
-                <a href="#instagram">Instagram</a> | 
-                <a href="#tiktok">TikTok</a>
+                <h3 class="text-xl font-bold mb-4 text-white border-b border-gray-700 pb-2">KẾT NỐI VỚI HOANG STORE</h3>
+                <p class="mb-3 text-sm">Theo dõi chúng tôi trên:</p>
+                <div class="flex space-x-4">
+                    <a href="#facebook" class="text-2xl hover:text-brand-blue transition duration-200" title="Facebook">
+                        <!-- Facebook Icon (Inline SVG) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.353c-.808 0-.647.33-.647.777v1.223h2l-.33 2h-1.67v6h-3v-6h-2v-2h2v-1.353c0-1.281.846-2.647 2.871-2.647h1.129v3z"/></svg>
+                    </a>
+                    <a href="#instagram" class="text-2xl hover:text-brand-blue transition duration-200" title="Instagram">
+                        <!-- Instagram Icon (Inline SVG) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.77 1.624 4.982 4.958.027.408.044.825.044 1.257v5.21c0 4.238-1.574 5.908-4.995 6.046-1.266.059-1.646.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.25-14.8-4.77-1.624-4.982-4.958-.025-.408-.044-.825-.044-1.257v-5.21c0-4.238 1.574-5.908 4.995-6.046 1.266-.059 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.666.014-4.947.072-4.358.201-6.78 2.62-6.995 7.005-.058 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.201 4.357 2.62 6.78 7.005 6.994 1.28.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.358-.201 6.78-2.619 7.004-7.005.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.668-.072-4.947-.201-4.358-2.62-6.78-7.005-6.995-1.281-.058-1.689-.073-4.948-.073zm0 5.838c-3.414 0-6.182 2.767-6.182 6.182s2.768 6.182 6.182 6.182 6.182-2.767 6.182-6.182-2.768-6.182-6.182-6.182zm0 10.163c-2.209 0-3.982-1.775-3.982-3.982s1.773-3.982 3.982-3.982 3.982 1.775 3.982 3.982-1.773 3.982-3.982 3.982zm6.406-11.845c-.655 0-1.188.532-1.188 1.188s.533 1.188 1.188 1.188 1.188-.532 1.188-1.188-.533-1.188-1.188-1.188z"/></svg>
+                    </a>
+                    <a href="#tiktok" class="text-2xl hover:text-brand-blue transition duration-200" title="TikTok">
+                        <!-- TikTok Icon (Inline SVG) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-3.882 17.58c.885.067 1.77-.282 2.542-.713 1.346-.757 2.181-1.921 2.37-3.324.083-.556.096-1.112.03-1.668-.073-.556-.37-1.077-.73-1.554.093.076.18.156.265.234.73.684 1.257 1.545 1.55 2.55.277.962.247 1.956.12 2.924-.263 2.112-2.434 3.428-4.545 3.165-1.97-.247-3.41-1.758-3.568-3.79-.17-2.062.9-4.067 2.767-5.013.888-.456 1.947-.69 2.915-.69 1.144 0 2.222.25 3.18.73.473-.807.728-1.884.728-2.81 0-.616-.145-1.196-.406-1.722.285.02.583.03.88.03 3.315 0 6-2.685 6-6 0-.34-.035-.67-.09-1 .1-.04.2-.07.3-.1.145-.04.3-.06.45-.06 3.014 0 5.467 2.453 5.467 5.467 0 3.01-2.453 5.457-5.467 5.457h-.01c-1.22 0-2.348-.42-3.238-1.127.88.06 1.77-.28 2.54-.71 1.35-.76 2.18-1.92 2.37-3.32.08-.56.1-1.11.03-1.67-.07-.56-.37-1.08-.73-1.55.09.08.18.16.27.23.73.68 1.26 1.55 1.55 2.55.28.96.25 1.96.12 2.92-.26 2.11-2.43 3.43-4.55 3.17-1.97-.25-3.41-1.76-3.57-3.79-.17-2.06.9-4.07 2.77-5.01.89-.46 1.95-.69 2.92-.69 1.14 0 2.22.25 3.18.73.47-.8.73-1.88.73-2.81 0-.62-.15-1.2-.41-1.72.28.02.58.03.88.03 3.32 0 6-2.68 6-6 0-.34-.03-.67-.09-1z"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="copyright">
+    <!-- Copyright -->
+    <div id="copyright" class="bg-[#111827] text-gray-500 py-4 text-center text-xs">
         <p>&copy; 2025 Công Ty TNHH Thời Trang Hoang Store. Ghi rõ nguồn khi sao chép nội dung.</p>
     </div>
+
+    <!-- JavaScript for Search and Cart interaction -->
+    <script>
+        // --- Mock Data (Replace with Firestore for persistence) ---
+        const PRODUCTS_DATA = [
+            { id: 'PSM001', name: 'Sơ Mi Nam Trắng Tay Dài', price: 599000, desc: 'Áo Sơ Mi Công Sở' },
+            { id: 'PQA005', name: 'Quần Âu Vải Nano Chống Nhăn', price: 890000, desc: 'Quần Âu Khaki' },
+            { id: 'PAP010', name: 'Áo Polo Thêu Logo Dệt Kim Cao Cấp', price: 450000, desc: 'Áo Polo Nam' },
+            { id: 'PVT003', name: 'Bộ Vest Nam 2 Lớp Màu Ghi Thanh Lịch', price: 2990000, desc: 'Vest Nam' },
+            { id: 'PT012', name: 'Áo Phông Cotton Cơ Bản', price: 320000, desc: 'Áo Phông Cơ Bản' },
+            { id: 'PG008', name: 'Giày Da Oxford Chính Hãng', price: 1250000, desc: 'Giày Tây Công Sở' },
+            { id: 'PTL001', name: 'Thắt Lưng Da Bò Cao Cấp', price: 690000, desc: 'Thắt Lưng Da' },
+            { id: 'PQK004', name: 'Quần Kaki Dáng Slimfit Màu Be', price: 720000, desc: 'Quần Kaki' },
+        ];
+
+        // --- Utility Functions ---
+
+        /** Formats a number to Vietnamese currency string. */
+        const formatCurrency = (number) => {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+        };
+
+        // --- Cart Management (Using localStorage for this demo) ---
+
+        /** Initializes the cart from localStorage or returns an empty array. */
+        const getCart = () => {
+            try {
+                const cart = JSON.parse(localStorage.getItem('hoang_store_cart')) || [];
+                return cart;
+            } catch (e) {
+                console.error("Error retrieving cart from localStorage:", e);
+                return [];
+            }
+        };
+
+        /** Updates the cart count display. */
+        const updateCartDisplay = () => {
+            const cart = getCart();
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartLink = document.querySelector('#utility a:nth-child(1)');
+            if (cartLink) {
+                cartLink.textContent = `Giỏ Hàng (${cartCount})`;
+            }
+        };
+
+        /** Adds a product to the cart (localStorage). */
+        const addToCart = (productId) => {
+            const product = PRODUCTS_DATA.find(p => p.id === productId);
+            if (!product) {
+                console.error(`Product with ID ${productId} not found.`);
+                return;
+            }
+
+            let cart = getCart();
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            try {
+                localStorage.setItem('hoang_store_cart', JSON.stringify(cart));
+                updateCartDisplay();
+                
+                // Show a simple success message (Custom UI element instead of alert)
+                showNotification(`Đã thêm ${product.name} vào giỏ!`);
+
+            } catch (e) {
+                console.error("Error saving cart to localStorage:", e);
+            }
+        };
+
+        // --- Search Functionality ---
+
+        const searchInput = document.getElementById('product-search-input');
+        const searchButton = document.getElementById('search-submit-button');
+        const resultsList = document.getElementById('search-results-list');
+
+        const performSearch = (query) => {
+            const normalizedQuery = query.toLowerCase().trim();
+            if (normalizedQuery.length === 0) {
+                resultsList.style.display = 'none';
+                resultsList.innerHTML = '';
+                return;
+            }
+
+            const filteredProducts = PRODUCTS_DATA.filter(p => 
+                p.name.toLowerCase().includes(normalizedQuery) || 
+                p.id.toLowerCase().includes(normalizedQuery) ||
+                p.desc.toLowerCase().includes(normalizedQuery)
+            ).slice(0, 5); // Limit to top 5 results
+
+            resultsList.innerHTML = '';
+
+            if (filteredProducts.length > 0) {
+                filteredProducts.forEach(product => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'p-3 hover:bg-gray-100 cursor-pointer border-b last:border-b-0 text-sm';
+                    listItem.innerHTML = `
+                        <a href="#" class="block text-brand-dark font-medium">${product.name}</a>
+                        <span class="text-xs text-gray-500">${formatCurrency(product.price)}</span>
+                    `;
+                    // Optional: Add click handler to navigate/select product
+                    listItem.addEventListener('click', () => {
+                        searchInput.value = product.name;
+                        resultsList.style.display = 'none';
+                        showNotification(`Tìm thấy sản phẩm: ${product.name}`);
+                    });
+                    resultsList.appendChild(listItem);
+                });
+                resultsList.style.display = 'block';
+            } else {
+                resultsList.innerHTML = '<li class="p-3 text-sm text-gray-500">Không tìm thấy sản phẩm nào.</li>';
+                resultsList.style.display = 'block';
+            }
+        };
+
+        // --- Notification (replacing alert()) ---
+
+        const showNotification = (message) => {
+            let notif = document.getElementById('app-notification');
+            if (!notif) {
+                notif = document.createElement('div');
+                notif.id = 'app-notification';
+                notif.className = 'fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-xl opacity-0 transition-opacity duration-300 z-50 max-w-xs text-sm';
+                document.body.appendChild(notif);
+            }
+            notif.textContent = message;
+            notif.style.opacity = 1;
+
+            setTimeout(() => {
+                notif.style.opacity = 0;
+            }, 3000); // Hide after 3 seconds
+        };
+
+
+        // --- Initialization and Event Listeners ---
+
+        window.onload = () => {
+            updateCartDisplay(); // Load initial cart count
+
+            // 1. Search Events
+            searchInput.addEventListener('input', (e) => performSearch(e.target.value));
+            searchButton.addEventListener('click', () => performSearch(searchInput.value));
+            
+            // Hide results if clicking outside
+            document.addEventListener('click', (e) => {
+                if (!document.getElementById('utility').contains(e.target)) {
+                    resultsList.style.display = 'none';
+                }
+            });
+
+            // 2. Add to Cart Events
+            const cartButtons = document.querySelectorAll('.add-to-cart-btn');
+            cartButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Find the closest product card parent to get the ID
+                    const card = e.target.closest('.product-card');
+                    if (card) {
+                        const productId = card.getAttribute('data-product-id');
+                        addToCart(productId);
+                    }
+                });
+            });
+
+            // IMPORTANT NOTE FOR DEPLOYMENT:
+            // For a real application, replace the localStorage functions (getCart, addToCart)
+            // with Firebase Firestore operations to ensure data persistence across devices 
+            // and user sessions using the provided __app_id and __initial_auth_token.
+        };
+    </script>
+
+     <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+
+    addToCartButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const productCard = button.closest(".product-card");
+            const id = productCard.dataset.productId;
+            const name = productCard.querySelector("h3 a").innerText;
+            const priceText = productCard.querySelector(".text-xl").innerText;
+            const price = parseInt(priceText.replace(/\D/g, ""));
+            const img = productCard.querySelector("img").src;
+
+            // Lấy giỏ hàng cũ
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            // Kiểm tra xem sản phẩm đã tồn tại chưa
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    id,
+                    name,
+                    price,
+                    img,
+                    quantity: 1
+                });
+            }
+
+            // Lưu lại vào localStorage
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            alert("✅ Đã thêm vào giỏ hàng!");
+        });
+    });
+});
+</script>
 
 </body>
 </html>
